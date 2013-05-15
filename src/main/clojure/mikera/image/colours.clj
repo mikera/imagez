@@ -1,6 +1,7 @@
 (ns mikera.image.colours
   (:use [mikera.cljutils error])
   (:import [mikera.image Colours])
+  (:import [mikera.util Rand])
   (:import [java.awt Color]))
 
 (defmacro long-colour 
@@ -23,6 +24,11 @@
   "Return the RGB components of a colour value, in a 3-element vector of double values"
   ([^long argb]
     (TODO)))
+
+(defn rand-colour
+  "Returns a random RGB colour value with 100% alpha"
+  (^long []
+    (bit-or 0xFF000000 (Rand/r 0x1000000))))
 
 (def JAVA-COLOURS
   '(black blue cyan darkGray gray green lightGray magenta 

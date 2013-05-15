@@ -58,6 +58,11 @@
 			<artifactId>mikera-gui</artifactId>
 			<version>0.1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>net.mikera</groupId>
+			<artifactId>randomz</artifactId>
+			<version>0.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<scm>
