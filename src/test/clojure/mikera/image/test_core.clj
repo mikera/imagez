@@ -1,6 +1,7 @@
 (ns mikera.image.test-core
   (:use mikera.image.core)
   (:use clojure.test)
+  (:require [mikera.image.colours :refer [long-colour]])
   (:import [java.awt.image BufferedImage]))
 
 (deftest test-new-image
@@ -24,7 +25,10 @@
   (let [bi (new-image 1 1)
         pxs (get-pixels bi)]
     (is (instance? (Class/forName "[I") pxs))
-    (is (= [0] (seq pxs)))))
+    (is (= [0] (seq pxs)))
+    (aset pxs 0 0xFFFFFFFF)
+    (set-pixels bi pxs)
+    (is (== 0xFFFFFFFF (long-colour (.getRGB bi 0 0))))))
 
 (deftest test-load-image
   (let [^BufferedImage bi (load-image "mikera/image/samples/Clojure_300x300.png")]

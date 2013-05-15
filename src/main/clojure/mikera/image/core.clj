@@ -37,10 +37,17 @@
                  (int (* (.getHeight image) factor)))))
 
 (defn get-pixels 
-  "Gets the pixels in a BufferedImage as a primitive int array.
+  "Gets the pixels in a BufferedImage as a primitive array.
    This is probably the fastest format for manipulating an image."
   ([^BufferedImage image]
     (.getDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) nil)))
+
+(defn set-pixels 
+  "Sets the pixels in a BufferedImage using a primitive array.
+   This is probably the fastest format for manipulating an image."
+  ([^BufferedImage image ^ints pixels]
+    (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
+
 
 (defn show
   "Displays an image in a new JFrame"
