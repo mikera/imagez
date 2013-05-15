@@ -21,4 +21,27 @@
 		</repository>
 	</repositories>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.clojure</groupId>
+			<artifactId>clojure</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.mikera</groupId>
+			<artifactId>cljunit</artifactId>
+			<version>0.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.mikera</groupId>
+			<artifactId>clojure-utils</artifactId>
+			<version>0.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
+		</dependency>
+	</dependencies>
 </project>
