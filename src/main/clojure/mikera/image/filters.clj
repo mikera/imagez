@@ -1,13 +1,22 @@
 (ns mikera.image.filters
   (:import [java.awt.image BufferedImage BufferedImageOp]))
 
+;; TODO lot more filters to implement!!
+;;
+;; see: http://www.jhlabs.com/ip/filters/index.html
+
 (defn apply-mask
   "Creates an apply-mask filter"
   (^BufferedImageOp [^BufferedImage mask ^BufferedImage destination]
     (com.jhlabs.image.ApplyMaskFilter. mask destination)))
 
+(defn blur
+  "Creates a simple blur filter (3x3 pixel) blur"
+  (^BufferedImageOp []
+    (com.jhlabs.image.BlurFilter.)))
+
 (defn box-blur
-  "Creates a box-blur filter"
+  "Creates a box-blur filter "
   (^BufferedImageOp []
     (com.jhlabs.image.BoxBlurFilter.))
   (^BufferedImageOp [hRadius vRadius & {:keys [iterations]
@@ -31,3 +40,23 @@
    "Creates a grayscale filter"
    (^BufferedImageOp []
      (com.jhlabs.image.GrayscaleFilter.)))
+
+(defn invert
+   "Creates a colour inversion filter"
+   (^BufferedImageOp []
+     (com.jhlabs.image.InvertFilter.)))
+
+(defn emboss
+   "Creates a colour inversion filter"
+   (^BufferedImageOp []
+     (com.jhlabs.image.EmbossFilter.)))
+
+(defn halftone
+   "Creates a halftone filter"
+   (^BufferedImageOp []
+     (com.jhlabs.image.HalftoneFilter.)))
+
+(defn noise
+   "Creates a noise filter"
+   (^BufferedImageOp []
+     (com.jhlabs.image.NoiseFilter.)))
