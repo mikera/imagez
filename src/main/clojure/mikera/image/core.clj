@@ -55,8 +55,7 @@
   (let [^java.awt.image.BufferedImageOp filter filter
         ^java.awt.image.BufferedImage image image 
         dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
-    (.filter filter image dest-img)
-    dest-img)))
+    (.filter filter image dest-img))))
 
 (defn show
   "Displays an image in a new JFrame"
