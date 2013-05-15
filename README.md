@@ -5,11 +5,15 @@ Image processing library for Clojure
 
 Contains various utility functions for handling colours and images.
 
- - Image scaling and resizing
- - Colour adjustments
- - Image filtering
- - Image input and output
- - etc.
+### Features
+
+Features so far:
+
+- Creating new images
+- Scaling / zooming images
+- Loading images from resource files
+- Getting and setting pixels in bulk using primitive arrays
+- Various colour handling functions
  
 ### Examples
 
