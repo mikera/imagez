@@ -15,6 +15,20 @@
   (^BufferedImageOp []
     (com.jhlabs.image.BlurFilter.)))
 
+(defn contrast
+  "Creates a contrast filter"
+  (^BufferedImageOp [contrast]
+    (let [f (com.jhlabs.image.ContrastFilter.)]
+      (.setContrast f (float contrast))
+      f)))
+
+(defn brightness
+  "Creates a brightness filter"
+  (^BufferedImageOp [brightness]
+    (let [f (com.jhlabs.image.ContrastFilter.)]
+      (.setBrightness f (float brightness))
+      f)))
+
 (defn box-blur
   "Creates a box-blur filter "
   (^BufferedImageOp []
