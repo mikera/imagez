@@ -17,3 +17,8 @@
                 org.imgscalr.Scalr$Method/BALANCED 
                 org.imgscalr.Scalr$Mode/FIT_EXACT 
                 (int new-width) (int new-height) nil))
+
+(defn zoom [factor ^BufferedImage image]
+  (scale-image image 
+               (int (* (.getWidth image) factor))
+               (int (* (.getHeight image) factor))))
