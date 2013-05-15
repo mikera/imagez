@@ -53,6 +53,11 @@
 			<artifactId>mathz</artifactId>
 			<version>0.1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>net.mikera</groupId>
+			<artifactId>mikera-gui</artifactId>
+			<version>0.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<scm>
