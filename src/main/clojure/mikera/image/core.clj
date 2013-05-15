@@ -36,6 +36,12 @@
                  (int (* (.getWidth image) factor))
                  (int (* (.getHeight image) factor)))))
 
+(defn get-pixels 
+  "Gets the pixels in a BufferedImage as a primitive int array.
+   This is probably the fastest format for manipulating an image."
+  ([^BufferedImage image]
+    (.getDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) nil)))
+
 (defn show
   "Displays an image in a new JFrame"
   ([image & {:keys [zoom title]}]

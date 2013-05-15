@@ -20,6 +20,12 @@
     (is (== 20 (.getWidth bi)))
     (is (== 20 (.getHeight bi)))))
 
+(deftest test-get-pixels
+  (let [bi (new-image 1 1)
+        pxs (get-pixels bi)]
+    (is (instance? (Class/forName "[I") pxs))
+    (is (= [0] (seq pxs)))))
+
 (deftest test-load-image
   (let [^BufferedImage bi (load-image "mikera/image/samples/Clojure_300x300.png")]
     (is (instance? BufferedImage bi))
