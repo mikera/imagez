@@ -1,6 +1,7 @@
 (ns mikera.image.core
   (:import [java.awt.image BufferedImage])
-  (:import [org.imgscalr Scalr]))
+  (:import [org.imgscalr Scalr])
+  (:import [mikera.gui Frames]))
 
 (set! *unchecked-math* true)
 (set! *warn-on-reflection* true)
@@ -34,3 +35,10 @@
     (scale-image image 
                  (int (* (.getWidth image) factor))
                  (int (* (.getHeight image) factor)))))
+
+(defn show
+  "Displays an image in a new JFrame"
+  ([image & {:keys [zoom title]}]
+    (let [^BufferedImage image image
+          ^String title (or title "Imagez Frame")]
+      (Frames/display image title))))
