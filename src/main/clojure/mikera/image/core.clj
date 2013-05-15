@@ -21,10 +21,16 @@
 (defn- ^ClassLoader context-class-loader []
   (.getContextClassLoader (Thread/currentThread)))
 
-(defn ^java.awt.image.BufferedImage load-image [resource-name]
-  (javax.imageio.ImageIO/read (.getResource (context-class-loader) resource-name)))
+(defn load-image 
+  "Loads a BufferedImage from a resource on the classpath.
 
-(defn zoom [factor ^BufferedImage image]
-  (scale-image image 
-               (int (* (.getWidth image) factor))
-               (int (* (.getHeight image) factor))))
+   Usage: (load-image \"some/path/image-name.png\")"
+  (^java.awt.image.BufferedImage [resource-name]
+    (javax.imageio.ImageIO/read (.getResource (context-class-loader) resource-name))))
+
+(defn zoom 
+  "Zooms into (scales) an image with a given scale factor."
+  ([factor ^BufferedImage image]
+    (scale-image image 
+                 (int (* (.getWidth image) factor))
+                 (int (* (.getHeight image) factor)))))
