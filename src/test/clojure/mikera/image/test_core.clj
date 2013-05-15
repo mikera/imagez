@@ -20,3 +20,9 @@
     (is (== 20 (.getWidth bi)))
     (is (== 20 (.getHeight bi)))))
 
+(deftest test-load-image
+  (let [^BufferedImage bi (load-image "mikera/image/samples/Clojure_300x300.png")]
+    (is (instance? BufferedImage bi))
+    (is (== 300 (.getWidth bi)))
+    (is (== 300 (.getHeight bi)))))
+

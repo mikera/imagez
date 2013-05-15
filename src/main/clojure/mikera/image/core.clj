@@ -18,6 +18,12 @@
                 org.imgscalr.Scalr$Mode/FIT_EXACT 
                 (int new-width) (int new-height) nil))
 
+(defn- ^ClassLoader context-class-loader []
+  (.getContextClassLoader (Thread/currentThread)))
+
+(defn ^java.awt.image.BufferedImage load-image [resource-name]
+  (javax.imageio.ImageIO/read (.getResource (context-class-loader) resource-name)))
+
 (defn zoom [factor ^BufferedImage image]
   (scale-image image 
                (int (* (.getWidth image) factor))
