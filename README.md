@@ -16,6 +16,8 @@ Features so far:
 - Filtering images (blur, contrast, brightness etc.)
 - Various colour handling functions
  
+Imagez is a new library, so the API is being refined. Expect changes / additions on a regular basis. 
+ 
 ### Using Imagez
 
 Simply add the dependency via Clojars: https://clojars.org/net.mikera/imagez
