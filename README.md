@@ -16,6 +16,12 @@ Features so far:
 - Filtering images (blur, contrast, brightness etc.)
 - Various colour handling functions
  
+### Using Imagez
+
+Simply add the dependency via Clojars: https://clojars.org/net.mikera/imagez
+
+Imagez requires Clojure 1.4 and above.
+ 
 ### Examples
 
 ```clojure
@@ -43,10 +49,6 @@ Features so far:
 For more examples including image filtering, see the demo namespace:
 
  - https://github.com/mikera/imagez/blob/master/src/test/clojure/mikera/image/demo.clj
-
-### Requirements
-
-Clojure 1.4 and above.
 
 ### License
 
