@@ -13,6 +13,7 @@ Features so far:
 - Scaling / zooming images
 - Loading images from resource files
 - Getting and setting pixels in bulk using primitive arrays
+- Filtering images (blur, contrast, brightness etc.)
 - Various colour handling functions
  
 ### Examples
@@ -38,6 +39,10 @@ Features so far:
 ;; the zoom function will automatically interpolate the pixel values
 (show bi :zoom 10.0 :title "Isn't it beautiful?")
 ```
+
+For more examples including image filtering, see the demo namespace:
+
+ - https://github.com/mikera/imagez/blob/master/src/test/clojure/mikera/image/demo.clj
 
 ### Requirements
 
