@@ -9,11 +9,20 @@
   ([x]
   `(bit-and 0xFFFFFFFF ~x)))
 
-(defn rgb ^long [r g b]
-  (long-colour (Colours/getRGBClamped (double r) (double g) (double b))))
+(defn rgb
+  "Get the integer ARGB colour value specified by the RGB colour components. 
+   The Alpha value of the resulting colour will be 1.0 (fully opaque)"
+  (^long [^Color colour]
+    (bit-or 0xFF000000 (long-colour (.getRGB colour))))
+  (^long [r g b]
+    (long-colour (Colours/getRGBClamped (double r) (double g) (double b)))))
 
-(defn argb ^long [a r g b]
-  (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b))))
+(defn argb 
+  "Get the integer ARGB colour value specified by the ARGB colour components."
+  (^long [^Color colour]
+    (long-colour (.getRGB colour)))
+  (^long [a r g b]
+    (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
 (defn components-argb 
   "Return the ARGB components of a colour value, in a 4-element vector of double values"
@@ -29,6 +38,11 @@
   "Returns a random RGB colour value with 100% alpha"
   (^long []
     (bit-or 0xFF000000 (Rand/r 0x1000000))))
+
+(defn rand-grayscale
+  "Returns a random grayscale colour value with 100% alpha"
+  (^long []
+    (bit-or 0xFF000000 (* 0x10101 (Rand/r 0x100)))))
 
 (def JAVA-COLOURS
   '(black blue cyan darkGray gray green lightGray magenta 
