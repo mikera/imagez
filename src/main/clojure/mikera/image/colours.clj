@@ -15,13 +15,15 @@
   (^long [^Color colour]
     (bit-or 0xFF000000 (long-colour (.getRGB colour))))
   (^long [r g b]
-    (long-colour (Colours/getRGBClamped (double r) (double g) (double b)))))
+    (long-colour (Colours/getRGBClamped (double r) (double g) (double b))))
+  (^long [r g b a]
+    (long-colour (Colours/getARGBClamped (double a) (double r) (double g) (double b)))))
 
 (defn argb 
   "Get the integer ARGB colour value specified by the ARGB colour components."
   (^long [^Color colour]
     (long-colour (.getRGB colour)))
-  (^long [a r g b]
+  (^long [r g b a]
     (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
 (defn components-argb 
