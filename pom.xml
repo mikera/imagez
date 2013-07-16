@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>clojure-utils</artifactId>
-			<version>0.2.1</version>
+			<version>0.2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.imgscalr</groupId>
