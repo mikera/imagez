@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>imagez</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>Imagez</name>
 	<description>Image processing library for Clojure</description>
 
@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>clojure-utils</artifactId>
-			<version>0.2.1</version>
+			<version>0.2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.imgscalr</groupId>
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>mathz</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.mikera</groupId>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>randomz</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jhlabs</groupId>
@@ -73,6 +73,6 @@
 		<connection>scm:git:git@github.com:mikera/${project.artifactId}.git</connection>
 		<url>scm:git:git@github.com:mikera/${project.artifactId}.git</url>
 		<developerConnection>scm:git:git@github.com:mikera/${project.artifactId}.git</developerConnection>
-		<tag>imagez-0.0.2</tag>
+		<tag>imagez-0.0.3</tag>
 	</scm>
 </project>

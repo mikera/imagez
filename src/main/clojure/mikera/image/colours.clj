@@ -15,24 +15,31 @@
   (^long [^Color colour]
     (bit-or 0xFF000000 (long-colour (.getRGB colour))))
   (^long [r g b]
-    (long-colour (Colours/getRGBClamped (double r) (double g) (double b)))))
+    (long-colour (Colours/getRGBClamped (double r) (double g) (double b))))
+  (^long [r g b a]
+    (long-colour (Colours/getARGBClamped (double a) (double r) (double g) (double b)))))
 
 (defn argb 
   "Get the integer ARGB colour value specified by the ARGB colour components."
   (^long [^Color colour]
     (long-colour (.getRGB colour)))
-  (^long [a r g b]
+  (^long [r g b a]
     (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
 (defn components-argb 
-  "Return the ARGB components of a colour value, in a 4-element vector of double values"
+  "Return the ARGB components of a colour value, in a 4-element vector of long values"
   ([^long argb]
-    (TODO)))
+   [(bit-shift-right (bit-and argb 0xFF000000) 24)
+    (bit-shift-right (bit-and argb 0x00FF0000) 16)
+    (bit-shift-right (bit-and argb 0x0000FF00) 8)
+    (bit-and argb 0x000000FF)]))
 
 (defn components-rgb 
-  "Return the RGB components of a colour value, in a 3-element vector of double values"
+  "Return the RGB components of a colour value, in a 3-element vector of long values"
   ([^long argb]
-    (TODO)))
+   [(bit-shift-right (bit-and argb 0x00FF0000) 16)
+    (bit-shift-right (bit-and argb 0x0000FF00) 8)
+    (bit-and argb 0x000000FF)]))
 
 (defn rand-colour
   "Returns a random RGB colour value with 100% alpha"
