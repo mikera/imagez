@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>mathz</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.mikera</groupId>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>randomz</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jhlabs</groupId>
