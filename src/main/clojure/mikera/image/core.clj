@@ -13,11 +13,11 @@
   (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB))
 
 (defn scale-image
-  [^BufferedImage image new-width new-height]
-  (Scalr/resize image 
-                org.imgscalr.Scalr$Method/BALANCED 
-                org.imgscalr.Scalr$Mode/FIT_EXACT 
-                (int new-width) (int new-height) nil))
+  ([^BufferedImage image new-width new-height]
+    (Scalr/resize image 
+                  org.imgscalr.Scalr$Method/BALANCED 
+                  org.imgscalr.Scalr$Mode/FIT_EXACT 
+                  (int new-width) (int new-height) nil)))
 
 (defn- ^ClassLoader context-class-loader []
   (.getContextClassLoader (Thread/currentThread)))
