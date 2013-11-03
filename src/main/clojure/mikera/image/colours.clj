@@ -4,6 +4,9 @@
   (:import [mikera.util Rand])
   (:import [java.awt Color]))
 
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* true)
+
 (defmacro long-colour 
   "Macro to convert an integer ARGB value to a long colour value."
   ([x]

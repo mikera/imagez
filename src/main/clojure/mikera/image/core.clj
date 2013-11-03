@@ -9,11 +9,11 @@
 (defn new-image
   "Creates a new BufferedImage with the specified width and height. 
    Uses ARGB format by default."
-  [^long width ^long height]
-  (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB))
+  (^BufferedImage [width height]
+    (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)))
 
 (defn scale-image
-  ([^BufferedImage image new-width new-height]
+  (^BufferedImage [^BufferedImage image new-width new-height]
     (Scalr/resize image 
                   org.imgscalr.Scalr$Method/BALANCED 
                   org.imgscalr.Scalr$Mode/FIT_EXACT 
@@ -26,12 +26,12 @@
   "Loads a BufferedImage from a resource on the classpath.
 
    Usage: (load-image \"some/path/image-name.png\")"
-  (^java.awt.image.BufferedImage [resource-name]
+  (^BufferedImage [resource-name]
     (javax.imageio.ImageIO/read (.getResource (context-class-loader) resource-name))))
 
 (defn zoom 
   "Zooms into (scales) an image with a given scale factor."
-  ([factor ^BufferedImage image]
+  (^BufferedImage [factor ^BufferedImage image]
     (scale-image image 
                  (int (* (.getWidth image) factor))
                  (int (* (.getHeight image) factor)))))
@@ -57,6 +57,11 @@
         dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
     (.filter filter image dest-img)
     dest-img)))
+
+(defn sub-image
+  "Gets a sub-image area from an image."
+  (^BufferedImage [^BufferedImage image x y w h]
+    (.getSubimage image (int x) (int y) (int w) (int h))))
 
 (defn show
   "Displays an image in a new JFrame"
