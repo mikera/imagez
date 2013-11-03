@@ -3,7 +3,21 @@ imagez
 
 Image processing library for Clojure
 
-Contains various utility functions for handling colours and images.
+Contains various utility functions for handling colours and bitmap images.
+
+[![Build Status](https://travis-ci.org/mikera/imagez.png?branch=develop)](https://travis-ci.org/mikera/imagez)
+
+### Example
+
+```clojure
+;; load an image from a resource file
+(def ant (load-image "mikera/image/samples/Ant.png"))
+
+;; show the iamge, after applying an "invert" filter
+(show (filter-image (invert) ant))
+```
+
+![Inverted ant](http://clojurefun.files.wordpress.com/2013/05/inverted-ant.png)
 
 ### Features
 
@@ -24,7 +38,7 @@ Simply add the dependency via Clojars: https://clojars.org/net.mikera/imagez
 
 Imagez requires Clojure 1.4 and above.
  
-### Examples
+### More Examples
 
 ```clojure
 (use 'mikera.image.core)
