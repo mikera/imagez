@@ -10,6 +10,8 @@
 ;; colours are generally viewable in the range 0..1
 ;; though the spectrums can continue / be generated outside this range
 
+(def ^:const THIRD-TAU (/ Maths/TAU 3.0))
+
 (defn heatmap
   (^long [^double x]
     (let [x (* 8 (- x 0.5))
@@ -28,9 +30,9 @@
 
 (defn wheel
   (^long [^double x]
-    (let [x (- x (java.lang.Math/floor x))
+    (let [x (- x (java.lang.Math/floor x)) ()
           x (* x Maths/TAU)
-          t (* 0.333333333 Maths/TAU)
+          t THIRD-TAU
           r (Math/cos x)
           g (Math/cos (- x t))
           b (Math/cos (+ x t))
