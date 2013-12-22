@@ -1,6 +1,9 @@
 (ns mikera.image.filters
   (:import [java.awt.image BufferedImage BufferedImageOp]))
 
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* true)
+
 ;; TODO lot more filters to implement!!
 ;;
 ;; see: http://www.jhlabs.com/ip/filters/index.html

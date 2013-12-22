@@ -4,6 +4,9 @@
   (:require [mikera.image.colours :refer [long-colour]])
   (:import [java.awt.image BufferedImage]))
 
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* true)
+
 (deftest test-new-image
   (is (instance? BufferedImage (new-image 10 10))))
 
@@ -19,7 +22,12 @@
         bi (zoom 2.0 bi)]
     (is (instance? BufferedImage bi))
     (is (== 20 (.getWidth bi)))
-    (is (== 20 (.getHeight bi)))))
+    (is (== 20 (.getHeight bi)))
+    (.setRGB bi 0 0 (unchecked-int 0xFFFFFFFF))
+    (let [si (sub-image bi 0 0 3 4)]
+      (is (== 3 (.getWidth si)))
+      (is (== 4 (.getHeight si)))
+      (is (== 0xFFFFFFFF (long-colour (.getRGB si 0 0)))))))
 
 (deftest test-get-pixels
   (let [bi (new-image 1 1)
@@ -35,4 +43,6 @@
     (is (instance? BufferedImage bi))
     (is (== 300 (.getWidth bi)))
     (is (== 300 (.getHeight bi)))))
+
+
 

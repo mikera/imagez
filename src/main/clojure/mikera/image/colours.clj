@@ -4,6 +4,9 @@
   (:import [mikera.util Rand])
   (:import [java.awt Color]))
 
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* true)
+
 (defmacro long-colour 
   "Macro to convert an integer ARGB value to a long colour value."
   ([x]
@@ -11,7 +14,8 @@
 
 (defn rgb
   "Get the integer ARGB colour value specified by the RGB colour components. 
-   The Alpha value of the resulting colour will be 1.0 (fully opaque)"
+   
+   Unless specified the Alpha value of the resulting colour will be 1.0 (fully opaque)"
   (^long [^Color colour]
     (bit-or 0xFF000000 (long-colour (.getRGB colour))))
   (^long [r g b]
@@ -23,6 +27,8 @@
   "Get the integer ARGB colour value specified by the ARGB colour components."
   (^long [^Color colour]
     (long-colour (.getRGB colour)))
+  (^long [r g b]
+    (long-colour (Colours/getRGBClamped (double r) (double g) (double b))))
   (^long [r g b a]
     (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
@@ -51,9 +57,14 @@
   (^long []
     (bit-or 0xFF000000 (* 0x10101 (Rand/r 0x100)))))
 
+(defn color 
+  (^Color [rgba]
+    (let [rgba (int rgba)]
+      (Color. rgba true)))) 
+
 (def JAVA-COLOURS
   '(black blue cyan darkGray gray green lightGray magenta 
     orange pink red white yellow))
 
 (doseq [colour JAVA-COLOURS]
-  (eval `(def ~colour (long-colour (.getRGB (. Color ~colour))))))
+  (eval `(def ~(vary-meta colour assoc :const true) (long-colour (.getRGB (. Color ~colour))))))
