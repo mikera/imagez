@@ -14,7 +14,8 @@
 
 (defn rgb
   "Get the integer ARGB colour value specified by the RGB colour components. 
-   The Alpha value of the resulting colour will be 1.0 (fully opaque)"
+   
+   Unless specified the Alpha value of the resulting colour will be 1.0 (fully opaque)"
   (^long [^Color colour]
     (bit-or 0xFF000000 (long-colour (.getRGB colour))))
   (^long [r g b]
@@ -53,6 +54,11 @@
   "Returns a random grayscale colour value with 100% alpha"
   (^long []
     (bit-or 0xFF000000 (* 0x10101 (Rand/r 0x100)))))
+
+(defn color 
+  (^Color [rgba]
+    (let [rgba (int rgba)]
+      (Color. rgba true)))) 
 
 (def JAVA-COLOURS
   '(black blue cyan darkGray gray green lightGray magenta 

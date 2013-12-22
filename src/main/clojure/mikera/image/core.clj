@@ -1,4 +1,5 @@
 (ns mikera.image.core
+  (:require [mikera.image.colours :as col])
   (:import [java.awt.image BufferedImage])
   (:import [org.imgscalr Scalr])
   (:import [mikera.gui Frames]))
@@ -62,6 +63,19 @@
   "Gets a sub-image area from an image."
   (^BufferedImage [^BufferedImage image x y w h]
     (.getSubimage image (int x) (int y) (int w) (int h))))
+
+(defn gradient-image 
+  (^BufferedImage [spectrum-fn w h]
+    (let [w (int w)
+          h (int h)
+          im (BufferedImage. w h BufferedImage/TYPE_INT_ARGB)
+          g (.getGraphics im)]
+      (dotimes [i w]
+        (.setColor g (col/color (spectrum-fn (/ (double i) w))))
+        (.fillRect g (int i) (int 0) (int 1) (int h))) 
+      im))
+  (^BufferedImage [spectrum-fn]
+    (gradient-image spectrum-fn 200 60)))
 
 (defn show
   "Displays an image in a new JFrame"
