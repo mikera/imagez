@@ -39,7 +39,7 @@
 (defn get-pixels 
   "Gets the pixels in a BufferedImage as a primitive array.
    This is probably the fastest format for manipulating an image."
-  ([^BufferedImage image]
+  (^ints [^BufferedImage image]
     (.getDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) nil)))
 
 (defn set-pixels 
