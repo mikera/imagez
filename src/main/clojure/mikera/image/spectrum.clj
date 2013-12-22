@@ -30,7 +30,7 @@
 
 (defn wheel
   (^long [^double x]
-    (let [x (- x (java.lang.Math/floor x)) ()
+    (let [x (- x (java.lang.Math/floor x))
           x (* x Maths/TAU)
           t THIRD-TAU
           r (Math/cos x)
