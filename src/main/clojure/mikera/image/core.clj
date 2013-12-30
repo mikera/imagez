@@ -65,6 +65,8 @@
     (.getSubimage image (int x) (int y) (int w) (int h))))
 
 (defn gradient-image 
+  "Creates an image filled with a gradient according to the given spectrum function.
+   Default is a filled gradient from left=0 to right=1." 
   (^BufferedImage [spectrum-fn w h]
     (let [w (int w)
           h (int h)
