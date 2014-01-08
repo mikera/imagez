@@ -3,3 +3,5 @@
 /target
 /.settings
 /classes
+.lein-failures
+.lein-repl-history
