@@ -19,7 +19,7 @@
 
 (deftest test-zoom-image
   (let [^BufferedImage bi (new-image 10 10)
-        bi (zoom 2.0 bi)]
+        bi (zoom bi 2.0)]
     (is (instance? BufferedImage bi))
     (is (== 20 (.getWidth bi)))
     (is (== 20 (.getHeight bi)))

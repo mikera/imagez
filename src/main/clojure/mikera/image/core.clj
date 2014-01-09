@@ -32,7 +32,7 @@
 
 (defn zoom
   "Zooms into (scales) an image with a given scale factor."
-  (^BufferedImage [factor ^BufferedImage image]
+  (^BufferedImage [^BufferedImage image factor]
     (scale-image image
                  (int (* (.getWidth image) factor))
                  (int (* (.getHeight image) factor)))))
@@ -52,8 +52,8 @@
 (defn filter-image
   "Applies a BufferedImageOp filter to a source image.
    Returns a new image."
-  (^BufferedImage [^java.awt.image.BufferedImageOp filter
-                   ^java.awt.image.BufferedImage image]
+  (^BufferedImage [^java.awt.image.BufferedImage image
+                   ^java.awt.image.BufferedImageOp filter]
   (let [dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
     (.filter filter image dest-img)
     dest-img)))
