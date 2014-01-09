@@ -29,15 +29,15 @@ Features so far:
 - Getting and setting pixels in bulk using primitive arrays
 - Filtering images (blur, contrast, brightness etc.)
 - Various colour handling functions
- 
+
 Imagez is a new library, so the API is being refined. Expect changes / additions on a regular basis. 
- 
+
 ### Using Imagez
 
 Simply add the dependency via Clojars: https://clojars.org/net.mikera/imagez
 
 Imagez requires Clojure 1.4 and above.
- 
+
 ### More Examples
 
 ```clojure
@@ -53,7 +53,7 @@ Imagez requires Clojure 1.4 and above.
 ;; fill some random pixels with colours
 (dotimes [i 1024]
   (aset pixels i (rand-colour)))
-  
+
 ;; update the image with the newly changed pixel values
 (set-pixels bi pixels)
 

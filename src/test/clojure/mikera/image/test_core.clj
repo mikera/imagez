@@ -43,6 +43,3 @@
     (is (instance? BufferedImage bi))
     (is (== 300 (.getWidth bi)))
     (is (== 300 (.getHeight bi)))))
-
-
-

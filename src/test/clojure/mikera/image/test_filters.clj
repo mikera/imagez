@@ -10,4 +10,3 @@
         ^BufferedImage fi (filter-image (box-blur) bi)]
     (is (not (identical? bi fi)))
     (is (== 5 (.getWidth fi)))))
-
