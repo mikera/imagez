@@ -9,12 +9,12 @@
 
 (show ant)
 
-;; demo of various filters
-(show (filter-image (grayscale) ant))
-(show (filter-image (box-blur 2 2) ant))
-(show (filter-image (contrast 0.5) ant))
-(show (filter-image (brightness 2.0) ant))
-(show (filter-image (invert) ant))
+;; demo of various filters used in functional style
+(show ((grayscale) ant))
+(show ((box-blur 2 2) ant))
+(show ((contrast 0.5) ant))
+(show ((brightness 2.0) ant))
+(show ((invert) ant))
 
 )
 
