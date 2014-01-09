@@ -21,6 +21,7 @@
       (rgb r g b))))
 
 (defn mono
+  "Compute a monochromatic colour spectrum, from 0.0=black to 1.0=white" 
   (^long [^double x]
     (let [x (* 6 (- x 0.5))
           r (Maths/logistic x)
@@ -29,6 +30,7 @@
       (rgb r g b))))
 
 (defn wheel
+  "Compute a simple colour wheel spectrum, from 0.0 to 1.0" 
   (^long [^double x]
     (let [x (- x (java.lang.Math/floor x))
           x (* x Maths/TAU)

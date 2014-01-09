@@ -14,6 +14,7 @@
     (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)))
 
 (defn scale-image
+  "Scales an image to a specified width and height"
   (^BufferedImage [^BufferedImage image new-width new-height]
     (Scalr/resize image
                   org.imgscalr.Scalr$Method/BALANCED
