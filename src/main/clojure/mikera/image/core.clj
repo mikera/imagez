@@ -52,10 +52,9 @@
 (defn filter-image
   "Applies a BufferedImageOp filter to a source image.
    Returns a new image."
-  (^BufferedImage [filter image]
-  (let [^java.awt.image.BufferedImageOp filter filter
-        ^java.awt.image.BufferedImage image image
-        dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
+  (^BufferedImage [^java.awt.image.BufferedImageOp filter
+                   ^java.awt.image.BufferedImage image]
+  (let [dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
     (.filter filter image dest-img)
     dest-img)))
 
