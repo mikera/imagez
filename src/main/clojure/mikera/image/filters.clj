@@ -8,6 +8,16 @@
 ;;
 ;; see: http://www.jhlabs.com/ip/filters/index.html
 
+(deftype Filter [^BufferedImageOp image-op]
+  clojure.lang.IFn
+    (invoke [this image]
+      (let [^BufferedImage image image 
+            dest-img (.createCompatibleDestImage image-op image (.getColorModel image))]
+        (.filter image-op image dest-img)
+        dest-img))
+    (applyTo [this args] 
+      (clojure.lang.AFn/applyToHelper this args)))
+
 (defn apply-mask
   "Creates an apply-mask filter"
   (^BufferedImageOp [^BufferedImage mask ^BufferedImage destination]
