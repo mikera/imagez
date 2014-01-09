@@ -52,7 +52,8 @@
     (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
 
 (defn filter-image
-  "Applies a BufferedImageOp filter to a source image.
+  "Applies a filter to a source image. Filter may be either a BufferedImageOp or an Imagez filter.
+
    Returns a new image."
   (^BufferedImage [^java.awt.image.BufferedImage image
                    filter]
@@ -82,7 +83,7 @@
     (gradient-image spectrum-fn 200 60)))
 
 (defn show
-  "Displays an image in a new JFrame"
+  "Displays an image in a new JFrame."
   ([image & {:keys [zoom title]}]
     (let [^BufferedImage image (if zoom (mikera.image.core/zoom (double zoom) image) image)
           ^String title (or title "Imagez Frame")]
