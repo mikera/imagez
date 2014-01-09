@@ -1,6 +1,7 @@
 (ns mikera.image.core
   (:require [mikera.image.colours :as col])
-  (:import [java.awt.image BufferedImage])
+  (:require [mikera.image.filters :as filt])
+  (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [org.imgscalr Scalr])
   (:import [mikera.gui Frames]))
 
@@ -54,8 +55,9 @@
   "Applies a BufferedImageOp filter to a source image.
    Returns a new image."
   (^BufferedImage [^java.awt.image.BufferedImage image
-                   ^java.awt.image.BufferedImageOp filter]
-  (let [dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
+                   filter]
+  (let [filter (filt/to-image-op filter)
+        dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
     (.filter filter image dest-img)
     dest-img)))
 

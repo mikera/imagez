@@ -18,72 +18,77 @@
     (applyTo [this args] 
       (clojure.lang.AFn/applyToHelper this args)))
 
+(defn to-image-op ^BufferedImageOp [filter]
+  (if (instance? BufferedImageOp filter)
+    filter
+    (.image-op ^Filter filter)))
+
 (defn apply-mask
   "Creates an apply-mask filter"
-  (^BufferedImageOp [^BufferedImage mask ^BufferedImage destination]
-    (com.jhlabs.image.ApplyMaskFilter. mask destination)))
+  (^Filter [^BufferedImage mask ^BufferedImage destination]
+    (Filter. (com.jhlabs.image.ApplyMaskFilter. mask destination))))
 
 (defn blur
   "Creates a simple blur filter (3x3 pixel) blur"
-  (^BufferedImageOp []
-    (com.jhlabs.image.BlurFilter.)))
+  (^Filter []
+    (Filter. (com.jhlabs.image.BlurFilter.))))
 
 (defn contrast
   "Creates a contrast filter"
-  (^BufferedImageOp [contrast]
+  (^Filter [contrast]
     (let [f (com.jhlabs.image.ContrastFilter.)]
       (.setContrast f (float contrast))
-      f)))
+      (Filter. f))))
 
 (defn brightness
   "Creates a brightness filter"
-  (^BufferedImageOp [brightness]
+  (^Filter [brightness]
     (let [f (com.jhlabs.image.ContrastFilter.)]
       (.setBrightness f (float brightness))
-      f)))
+      (Filter. f))))
 
 (defn box-blur
   "Creates a box-blur filter "
-  (^BufferedImageOp []
-    (com.jhlabs.image.BoxBlurFilter.))
-  (^BufferedImageOp [hRadius vRadius & {:keys [iterations]
+  (^Filter []
+    (Filter. (com.jhlabs.image.BoxBlurFilter.)))
+  (^Filter [hRadius vRadius & {:keys [iterations]
                                         :or {iterations 3}}]
-    (com.jhlabs.image.BoxBlurFilter. (float hRadius) (float vRadius) iterations)))
+    (Filter. (com.jhlabs.image.BoxBlurFilter. (float hRadius) (float vRadius) iterations))))
 
 (defn quantize
   "Creates a quantization filter (reduces to a given number of levels)"
-  (^BufferedImageOp []
-    (com.jhlabs.image.QuantizeFilter.))
-  (^BufferedImageOp [num-levels & {:keys [dither serpentine]
+  (^Filter []
+    (Filter. (com.jhlabs.image.QuantizeFilter.)))
+  (^Filter [num-levels & {:keys [dither serpentine]
                                    :or {dither false
                                         serpentine false}}]
     (let [f (com.jhlabs.image.QuantizeFilter.)]
       (.setNumColors f (int num-levels))
       (.setSerpentine f (boolean serpentine))
       (.setDither f (boolean serpentine))
-      f)))
+      (Filter. f))))
 
 (defn grayscale
    "Creates a grayscale filter"
-   (^BufferedImageOp []
-     (com.jhlabs.image.GrayscaleFilter.)))
+   (^Filter []
+     (Filter. (com.jhlabs.image.GrayscaleFilter.))))
 
 (defn invert
    "Creates a colour inversion filter"
-   (^BufferedImageOp []
-     (com.jhlabs.image.InvertFilter.)))
+   (^Filter []
+     (Filter. (com.jhlabs.image.InvertFilter.))))
 
 (defn emboss
    "Creates a colour inversion filter"
-   (^BufferedImageOp []
-     (com.jhlabs.image.EmbossFilter.)))
+   (^Filter []
+     (Filter. (com.jhlabs.image.EmbossFilter.))))
 
 (defn halftone
    "Creates a halftone filter"
-   (^BufferedImageOp []
-     (com.jhlabs.image.HalftoneFilter.)))
+   (^Filter []
+     (Filter. (com.jhlabs.image.HalftoneFilter.))))
 
 (defn noise
    "Creates a noise filter"
    (^BufferedImageOp []
-     (com.jhlabs.image.NoiseFilter.)))
+     (Filter. (com.jhlabs.image.NoiseFilter.))))
