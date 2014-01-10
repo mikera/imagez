@@ -85,6 +85,6 @@
 (defn show
   "Displays an image in a new JFrame."
   ([image & {:keys [zoom title]}]
-    (let [^BufferedImage image (if zoom (mikera.image.core/zoom (double zoom) image) image)
+    (let [^BufferedImage image (if zoom (mikera.image.core/zoom image (double zoom)) image)
           ^String title (or title "Imagez Frame")]
       (Frames/display image title))))
