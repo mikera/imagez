@@ -11,7 +11,8 @@ Contains various utility functions for handling colours and bitmap images.
 
 ```clojure
 ;; load an image from a resource file
-(def ant (load-image "mikera/image/samples/Ant.png"))
+(require [clojure.java.io :refer [resource]])
+(def ant (load-image (resource "mikera/image/samples/Ant.png")))
 
 ;; show the iamge, after applying an "invert" filter
 (show (filter-image (invert) ant))

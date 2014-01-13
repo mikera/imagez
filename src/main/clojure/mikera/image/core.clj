@@ -1,6 +1,7 @@
 (ns mikera.image.core
   (:require [mikera.image.colours :as col])
   (:require [mikera.image.filters :as filt])
+  (:require [mikera.image.protocols :as protos])
   (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [org.imgscalr Scalr])
   (:import [mikera.gui Frames]))
@@ -22,15 +23,16 @@
                   org.imgscalr.Scalr$Mode/FIT_EXACT
                   (int new-width) (int new-height) nil)))
 
-(defn- ^ClassLoader context-class-loader []
-  (.getContextClassLoader (Thread/currentThread)))
-
 (defn load-image
-  "Loads a BufferedImage from a resource on the classpath.
+  "Loads a BufferedImage from a string, file or a URL representing a resource
+  on the classpath.
 
-   Usage: (load-image \"some/path/image-name.png\")"
-  (^BufferedImage [resource-name]
-    (javax.imageio.ImageIO/read (.getResource (context-class-loader) resource-name))))
+  Usage:
+
+    (load-image \"/some/path/to/image.png\")
+    ;; (require [clojure.java.io :refer [resource]])
+    (load-image (resource \"some/path/to/image.png\"))"
+  (^BufferedImage [resource] (protos/as-image resource)))
 
 (defn zoom
   "Zooms into (scales) an image with a given scale factor."
