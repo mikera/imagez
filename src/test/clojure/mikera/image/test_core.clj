@@ -2,7 +2,7 @@
   (:use mikera.image.core)
   (:use clojure.test)
   (:require [mikera.image.colours :refer [long-colour]]
-            [clojure.java.io :refer [as-file resource]])
+            [clojure.java.io :refer [as-file resource input-stream]])
   (:import java.awt.image.BufferedImage
            javax.imageio.ImageIO))
 
@@ -45,4 +45,5 @@
        "src/test/resources/mikera/image/samples/Clojure_300x300.png"
        (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png")
        (ImageIO/read (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png"))
-       (resource "mikera/image/samples/Clojure_300x300.png")))
+       (resource "mikera/image/samples/Clojure_300x300.png")
+       (input-stream "src/test/resources/mikera/image/samples/Clojure_300x300.png")))
