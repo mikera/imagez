@@ -2,6 +2,7 @@
   (:use mikera.image.colours)
   (:use mikera.image.core)
   (:use mikera.image.filters)
+  (:use mikera.image.spectrum)
   (:require [clojure.java.io :refer [resource]]))
 
 (def ant (-> "mikera/image/samples/Ant.png" resource load-image))
@@ -16,5 +17,8 @@
 (show ((contrast 0.5) ant))
 (show ((brightness 2.0) ant))
 (show ((invert) ant))
+
+;; demo of visualising a colour gradient
+(show (gradient-image wheel))
 
 )
