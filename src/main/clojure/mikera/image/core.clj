@@ -42,14 +42,14 @@
                  (int (* (.getHeight image) factor)))))
 
 (defn get-pixels
-  "Gets the pixels in a BufferedImage as a primitive array.
-   This is probably the fastest format for manipulating an image."
+  "Gets the pixels in a BufferedImage as a primitive int[] array.
+   This is often an efficient format for manipulating an image."
   (^ints [^BufferedImage image]
     (.getDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) nil)))
 
 (defn set-pixels
-  "Sets the pixels in a BufferedImage using a primitive array.
-   This is probably the fastest format for manipulating an image."
+  "Sets the pixels in a BufferedImage using a primitive int[] array.
+   This is often an efficient format for manipulating an image."
   ([^BufferedImage image ^ints pixels]
     (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
 
@@ -85,7 +85,9 @@
     (gradient-image spectrum-fn 200 60)))
 
 (defn show
-  "Displays an image in a new JFrame."
+  "Displays an image in a new frame. 
+
+   The frame includes simple menus for saving an image, and other handy utilities."
   ([image & {:keys [zoom title]}]
     (let [^BufferedImage image (if zoom (mikera.image.core/zoom image (double zoom)) image)
           ^String title (or title "Imagez Frame")]
