@@ -7,6 +7,11 @@
            javax.imageio.ImageIO
            java.awt.image.BufferedImage))
 
+(defprotocol ColourConversion
+  "Coerce different colour representations to an ARGB colour stored in a Long"
+  (as-argb [c]))
+
+
 (defprotocol ImageResource
   "Coerce different image resource representations to BufferedImage."
   (as-image [x] "Coerce argument to an image."))
