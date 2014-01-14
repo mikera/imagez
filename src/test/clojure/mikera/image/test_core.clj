@@ -1,8 +1,10 @@
 (ns mikera.image.test-core
   (:use mikera.image.core)
   (:use clojure.test)
-  (:require [mikera.image.colours :refer [long-colour]])
-  (:import [java.awt.image BufferedImage]))
+  (:require [mikera.image.colours :refer [long-colour]]
+            [clojure.java.io :refer [as-file resource input-stream]])
+  (:import java.awt.image.BufferedImage
+           javax.imageio.ImageIO))
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
@@ -39,7 +41,9 @@
     (is (== 0xFFFFFFFF (long-colour (.getRGB bi 0 0))))))
 
 (deftest test-load-image
-  (let [^BufferedImage bi (load-image "mikera/image/samples/Clojure_300x300.png")]
-    (is (instance? BufferedImage bi))
-    (is (== 300 (.getWidth bi)))
-    (is (== 300 (.getHeight bi)))))
+  (are [r] (instance? BufferedImage (load-image r))
+       "src/test/resources/mikera/image/samples/Clojure_300x300.png"
+       (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png")
+       (ImageIO/read (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png"))
+       (resource "mikera/image/samples/Clojure_300x300.png")
+       (input-stream "src/test/resources/mikera/image/samples/Clojure_300x300.png")))

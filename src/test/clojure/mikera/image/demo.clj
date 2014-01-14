@@ -1,9 +1,10 @@
 (ns mikera.image.demo
   (:use mikera.image.colours)
   (:use mikera.image.core)
-  (:use mikera.image.filters))
+  (:use mikera.image.filters)
+  (:require [clojure.java.io :refer [resource]]))
 
-(def ant (load-image "mikera/image/samples/Ant.png"))
+(def ant (-> "mikera/image/samples/Ant.png" resource load-image))
 
 (defn demo []
 
@@ -17,4 +18,3 @@
 (show ((invert) ant))
 
 )
-
