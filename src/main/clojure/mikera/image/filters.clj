@@ -18,10 +18,12 @@
     (applyTo [this args] 
       (clojure.lang.AFn/applyToHelper this args)))
 
-(defn to-image-op ^BufferedImageOp [filter]
-  (if (instance? BufferedImageOp filter)
-    filter
-    (.image-op ^Filter filter)))
+(defn to-image-op 
+  "Converts an Imagez filer to a java.awt.image.BufferedImageOp"
+  (^BufferedImageOp [filter]
+    (if (instance? BufferedImageOp filter)
+      filter
+      (.image-op ^Filter filter))))
 
 (defn apply-mask
   "Creates an apply-mask filter"
@@ -52,7 +54,7 @@
   (^Filter []
     (Filter. (com.jhlabs.image.BoxBlurFilter.)))
   (^Filter [hRadius vRadius & {:keys [iterations]
-                                        :or {iterations 3}}]
+                               :or {iterations 3}}]
     (Filter. (com.jhlabs.image.BoxBlurFilter. (float hRadius) (float vRadius) iterations))))
 
 (defn quantize
