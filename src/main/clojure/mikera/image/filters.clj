@@ -81,7 +81,7 @@
      (Filter. (com.jhlabs.image.InvertFilter.))))
 
 (defn emboss
-   "Creates a colour inversion filter"
+   "Creates an emboss filter"
    (^Filter []
      (Filter. (com.jhlabs.image.EmbossFilter.))))
 
