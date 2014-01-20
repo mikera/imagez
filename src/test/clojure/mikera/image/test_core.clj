@@ -19,6 +19,13 @@
     (is (== 5 (.getWidth bi)))
     (is (== 6 (.getHeight bi)))))
 
+(deftest test-scale
+  (let [^BufferedImage bi (new-image 10 10)
+        bi (scale bi 2.0 3.0)]
+    (is (instance? BufferedImage bi))
+    (is (== 20 (.getWidth bi)))
+    (is (== 30 (.getHeight bi)))))
+
 (deftest test-zoom-image
   (let [^BufferedImage bi (new-image 10 10)
         bi (zoom bi 2.0)]
