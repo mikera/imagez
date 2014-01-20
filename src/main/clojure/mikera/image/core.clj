@@ -23,6 +23,16 @@
                   org.imgscalr.Scalr$Mode/FIT_EXACT
                   (int new-width) (int new-height) nil)))
 
+(defn resize 
+  "Resizes an image to the specified width and height. If height is omitted, maintains the aspect ratio."
+  (^BufferedImage [^BufferedImage image new-width new-height]
+    (Scalr/resize image
+                  org.imgscalr.Scalr$Method/BALANCED
+                  org.imgscalr.Scalr$Mode/FIT_EXACT
+                  (int new-width) (int new-height) nil))
+  (^BufferedImage [^BufferedImage image new-width]
+    (resize new-width (/ (* new-width (.getHeight image)) (.getWidth image)))))
+
 (defn load-image
   "Loads a BufferedImage from a string, file or a URL representing a resource
   on the classpath.
