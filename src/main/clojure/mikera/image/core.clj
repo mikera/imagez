@@ -15,14 +15,6 @@
   (^BufferedImage [width height]
     (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)))
 
-(defn scale-image
-  "Scales an image to a specified width and height"
-  (^BufferedImage [^BufferedImage image new-width new-height]
-    (Scalr/resize image
-                  org.imgscalr.Scalr$Method/BALANCED
-                  org.imgscalr.Scalr$Mode/FIT_EXACT
-                  (int new-width) (int new-height) nil)))
-
 (defn resize 
   "Resizes an image to the specified width and height. If height is omitted, maintains the aspect ratio."
   (^BufferedImage [^BufferedImage image new-width new-height]
@@ -32,6 +24,21 @@
                   (int new-width) (int new-height) nil))
   (^BufferedImage [^BufferedImage image new-width]
     (resize new-width (/ (* new-width (.getHeight image)) (.getWidth image)))))
+
+(defn scale-image
+  "DEPRECATED: use 'resize' instead"
+  (^BufferedImage [^BufferedImage image new-width new-height]
+    (Scalr/resize image
+                  org.imgscalr.Scalr$Method/BALANCED
+                  org.imgscalr.Scalr$Mode/FIT_EXACT
+                  (int new-width) (int new-height) nil)))
+
+(defn scale
+  "Scales an image by a given factor or ratio."
+  (^BufferedImage [^BufferedImage image factor]
+    (resize image (* (.getWidth image) factor) (* (.getHeight image) factor)))
+  (^BufferedImage [^BufferedImage image width-factor height-factor]
+    (resize image (* (.getWidth image) width-factor) (* (.getHeight image) height-factor))))
 
 (defn load-image
   "Loads a BufferedImage from a string, file or a URL representing a resource
