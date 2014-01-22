@@ -23,5 +23,5 @@
 	;; demo of visualising a colour gradient
 	(show (gradient-image wheel))
 
-        (save and "/path/to/new-ant.png" :quality 0.9 :progressive true)
+        (save ant "/path/to/new-ant.png" :quality 0.9 :progressive true)
 )
