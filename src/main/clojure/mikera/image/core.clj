@@ -15,8 +15,9 @@
   (^BufferedImage [width height]
     (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)))
 
-(defn resize 
-  "Resizes an image to the specified width and height. If height is omitted, maintains the aspect ratio."
+(defn resize
+  "Resizes an image to the specified width and height. If height is omitted,
+  maintains the aspect ratio."
   (^BufferedImage [^BufferedImage image new-width new-height]
     (Scalr/resize image
                   org.imgscalr.Scalr$Method/BALANCED
@@ -71,7 +72,8 @@
     (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
 
 (defn filter-image
-  "Applies a filter to a source image. Filter may be either a BufferedImageOp or an Imagez filter.
+  "Applies a filter to a source image.
+  Filter may be either a BufferedImageOp or an Imagez filter.
 
    Returns a new image."
   (^BufferedImage [^java.awt.image.BufferedImage image
