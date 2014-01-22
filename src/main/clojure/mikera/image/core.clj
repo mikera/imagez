@@ -1,8 +1,11 @@
 (ns mikera.image.core
+  (:require [clojure.java.io :refer [file]])
+  (:require [clojure.string :refer [lower-case split]])
   (:require [mikera.image.colours :as col])
   (:require [mikera.image.filters :as filt])
   (:require [mikera.image.protocols :as protos])
   (:import [java.awt.image BufferedImage BufferedImageOp])
+  (:import [javax.imageio ImageIO IIOImage ImageWriter ImageWriteParam])
   (:import [org.imgscalr Scalr])
   (:import [mikera.gui Frames]))
 
@@ -104,10 +107,73 @@
     (gradient-image spectrum-fn 200 60)))
 
 (defn show
-  "Displays an image in a new frame. 
+  "Displays an image in a new frame.
 
    The frame includes simple menus for saving an image, and other handy utilities."
   ([image & {:keys [zoom title]}]
     (let [^BufferedImage image (if zoom (mikera.image.core/zoom image (double zoom)) image)
           ^String title (or title "Imagez Frame")]
       (Frames/display image title))))
+
+(defn- ^ImageWriteParam apply-compression
+  "Applies compression to the write parameter, if possible."
+  [^ImageWriteParam write-param quality]
+  (when (.canWriteCompressed write-param)
+    (doto write-param
+      (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)
+      (.setCompressionQuality quality)))
+  write-param)
+
+(defn- ^ImageWriteParam apply-progressive
+  "Applies progressive encoding, if possible.
+
+  If `progressive-flag` is `true`, turns progressive encoding on, `false`
+  turns it off. Defaults to `ImageWriteParam/MODE_COPY_FROM_METADATA`, which
+  is the default in ImageIO API."
+  [^ImageWriteParam write-param progressive-flag]
+  (when (.canWriteProgressive write-param)
+    (let [mode-map {true  ImageWriteParam/MODE_DEFAULT
+                    false ImageWriteParam/MODE_DISABLED}
+          mode-flag (get mode-map
+                         progressive-flag
+                         ImageWriteParam/MODE_COPY_FROM_METADATA)]
+      (doto write-param
+        (.setProgressiveMode mode-flag))))
+  write-param)
+
+(defn save
+  "Stores an image to disk.
+
+  Accepts optional keyword arguments.
+
+  `:quality` - decimal, between 0.0 and 1.0. Defaults to 0.8.
+
+  `:progressive` - boolean, `true` turns progressive encoding on, `false`
+  turns it off. Defaults to the default value in the ImageIO API -
+  `ImageWriteParam/MODE_COPY_FROM_METADATA`. See
+  [Java docs](http://docs.oracle.com/javase/7/docs/api/javax/imageio/ImageWriteParam.html).
+
+  Examples:
+
+    (save image \"/path/to/new/image.jpg\" :quality 1.0)
+    (save image \"/path/to/new/image/jpg\" :progressive false)
+    (save image \"/path/to/new/image/jpg\" :quality 0.7 :progressive true)
+
+  Returns the path to the saved image when saved successfully."
+  [^BufferedImage image path & {:keys [quality progressive]
+                                  :or {quality 0.8
+                                       progressive nil}}]
+  (let [outfile (file path)
+        ext (-> path (split #"\.") last lower-case)
+        ^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName ext))
+        ^ImageWriteParam write-param (.getDefaultWriteParam writer)
+        iioimage (IIOImage. image nil nil)
+        outstream (ImageIO/createImageOutputStream outfile)]
+    (apply-compression write-param quality)
+    (apply-progressive write-param progressive)
+    (doto writer
+      (.setOutput outstream)
+      (.write nil iioimage write-param)
+      (.dispose))
+    (.close outstream)
+    path))

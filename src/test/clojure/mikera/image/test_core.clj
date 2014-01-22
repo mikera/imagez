@@ -4,7 +4,9 @@
   (:require [mikera.image.colours :refer [long-colour]]
             [clojure.java.io :refer [as-file resource input-stream]])
   (:import java.awt.image.BufferedImage
-           javax.imageio.ImageIO))
+           javax.imageio.ImageIO
+           javax.imageio.ImageWriter
+           javax.imageio.ImageWriteParam))
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
@@ -54,3 +56,32 @@
        (ImageIO/read (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png"))
        (resource "mikera/image/samples/Clojure_300x300.png")
        (input-stream "src/test/resources/mikera/image/samples/Clojure_300x300.png")))
+
+(deftest test-compression
+  (testing "png"
+    (let [^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName "png"))
+          param (.getDefaultWriteParam writer)]
+      ;; setting compression quality is not actually supported for PNG, this test
+      ;; is just validates that it doesn't crash
+      (is (= param (#'mikera.image.core/apply-compression param 1.0)))))
+
+  (testing "jpeg"
+    (let [^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName "jpeg"))
+          param (.getDefaultWriteParam writer)
+          compression-fn #'mikera.image.core/apply-compression]
+      (is (= param (#'mikera.image.core/apply-compression param 1.0)))
+      (is (= (.getCompressionQuality ^ImageWriteParam (compression-fn param 1.0)) 1.0))
+      (is (= (.getCompressionQuality ^ImageWriteParam (compression-fn param 0.5)) 0.5)))))
+
+(deftest test-progressive
+  (let [^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName "jpeg"))
+        param (.getDefaultWriteParam writer)
+        progressive-fn #'mikera.image.core/apply-progressive]
+    (testing "returns the param"
+      (is (= param (progressive-fn param true))))
+
+    (testing "progressive flag values"
+      (are [flag mode] (= (.getProgressiveMode (progressive-fn param flag)) mode)
+           true ImageWriteParam/MODE_DEFAULT
+           false ImageWriteParam/MODE_DISABLED
+           nil ImageWriteParam/MODE_COPY_FROM_METADATA))))
