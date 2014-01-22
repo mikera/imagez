@@ -9,17 +9,19 @@
 (def ant (-> "mikera/image/samples/Ant.png" resource load-image))
 
 (defn demo []
-	
+
 	 ;; show a basic image
 	(show ant)
-	
+
 	;; demo of various filters used in functional style
 	(show ((grayscale) ant))
 	(show ((box-blur 2 2) ant))
 	(show ((contrast 0.5) ant))
 	(show ((brightness 2.0) ant))
 	(show ((invert) ant))
-	
+
 	;; demo of visualising a colour gradient
 	(show (gradient-image wheel))
+
+        (save and "/path/to/new-ant.png" :quality 0.9 :progressive true)
 )
