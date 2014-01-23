@@ -10,12 +10,13 @@ Contains various utility functions for handling colours and bitmap images.
 ### Example
 
 ```clojure
+(use 'mikera.image.core)
+
 ;; load an image from a resource file
-(require [clojure.java.io :refer [resource]])
-(def ant (load-image (resource "mikera/image/samples/Ant.png")))
+(def ant (load-image-resource "mikera/image/samples/Ant.png"))
 
 ;; show the iamge, after applying an "invert" filter
-(show (filter-image (invert) ant))
+(show (filter-image ant (filt/invert)))
 ```
 
 ![Inverted ant](http://clojurefun.files.wordpress.com/2013/05/inverted-ant.png)
