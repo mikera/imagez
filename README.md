@@ -11,6 +11,7 @@ Contains various utility functions for handling colours and bitmap images.
 
 ```clojure
 (use 'mikera.image.core)
+(require '[mikera.image.filters :as filt])
 
 ;; load an image from a resource file
 (def ant (load-image-resource "mikera/image/samples/Ant.png"))
