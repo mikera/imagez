@@ -81,7 +81,6 @@
       (is (= param (progressive-fn param true))))
 
     (testing "progressive flag values"
-      (are [flag mode] (= (.getProgressiveMode (progressive-fn param flag)) mode)
-           true ImageWriteParam/MODE_DEFAULT
-           false ImageWriteParam/MODE_DISABLED
-           nil ImageWriteParam/MODE_COPY_FROM_METADATA))))
+      (is (= (.getProgressiveMode ^ImageWriteParam (progressive-fn param true)) ImageWriteParam/MODE_DEFAULT))
+      (is (= (.getProgressiveMode ^ImageWriteParam (progressive-fn param false)) ImageWriteParam/MODE_DISABLED))
+      (is (= (.getProgressiveMode ^ImageWriteParam (progressive-fn param nil)) ImageWriteParam/MODE_COPY_FROM_METADATA)))))
