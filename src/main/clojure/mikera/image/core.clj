@@ -1,5 +1,5 @@
 (ns mikera.image.core
-  (:require [clojure.java.io :refer [file]])
+  (:require [clojure.java.io :refer [file resource]])
   (:require [clojure.string :refer [lower-case split]])
   (:require [mikera.image.colours :as col])
   (:require [mikera.image.filters :as filt])
@@ -54,6 +54,12 @@
     ;; (require [clojure.java.io :refer [resource]])
     (load-image (resource \"some/path/to/image.png\"))"
   (^BufferedImage [resource] (protos/as-image resource)))
+
+(defn load-image-resource
+  "Loads an image from a named resource on the classpath.
+
+   Equivalent to (load-image (clojure.java.io/resource res-path))"
+  (^BufferedImage [res-path] (load-image (resource res-path))))
 
 (defn zoom
   "Zooms into (scales) an image with a given scale factor."
