@@ -64,9 +64,7 @@
 (defn zoom
   "Zooms into (scales) an image with a given scale factor."
   (^BufferedImage [^BufferedImage image factor]
-    (scale-image image
-                 (int (* (.getWidth image) factor))
-                 (int (* (.getHeight image) factor)))))
+    (scale image factor)))
 
 (defn get-pixels
   "Gets the pixels in a BufferedImage as a primitive int[] array.
