@@ -28,10 +28,11 @@ Features so far:
 
 - Creating new images
 - Scaling / zooming images
-- Loading images from resource files
+- Loading images - from ordinary files, resource files, filesystem paths and streams
 - Getting and setting pixels in bulk using primitive arrays
 - Filtering images (blur, contrast, brightness etc.)
 - Various colour handling functions
+- Progressive encoding and controlling the quality of output images.
 
 Imagez is a new library, so the API is being refined. Expect changes / additions on a regular basis. 
 
