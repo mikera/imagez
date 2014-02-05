@@ -16,7 +16,9 @@
   "Creates a new BufferedImage with the specified width and height.
    Uses ARGB format by default."
   (^BufferedImage [width height]
-    (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)))
+    (new-image width height BufferedImage/TYPE_INT_ARGB))
+  (^BufferedImage [width height type]
+    (BufferedImage. (int width) (int height) type)))
 
 (defn resize
   "Resizes an image to the specified width and height. If height is omitted,
