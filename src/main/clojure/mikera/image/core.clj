@@ -4,6 +4,7 @@
   (:require [mikera.image.colours :as col])
   (:require [mikera.image.filters :as filt])
   (:require [mikera.image.protocols :as protos])
+  (:use mikera.cljutils.error) 
   (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [javax.imageio ImageIO IIOImage ImageWriter ImageWriteParam])
   (:import [org.imgscalr Scalr])
@@ -69,6 +70,13 @@
   "Zooms into (scales) an image with a given scale factor."
   (^BufferedImage [^BufferedImage image factor]
     (scale image factor)))
+
+(defn flip [^BufferedImage image direction]
+  "Flips an image in the specified direction :horizontal or :vertical"
+  (cond
+    (= :horizontal direction) (TODO)
+    (= :vertical direction) (TODO)
+    :else (error "Flip direction not valid: " direction))) 
 
 (defn get-pixels
   "Gets the pixels in a BufferedImage as a primitive int[] array.
