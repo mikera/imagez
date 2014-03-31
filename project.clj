@@ -1,8 +1,8 @@
 (defproject imagez "0.3.2-SNAPSHOT"
   :description "Image processing library for Clojure"
-  :dependencies [[org.clojure/clojure "1.5.1"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
                  [net.mikera/cljunit "0.3.0"]
-                 [net.mikera/clojure-utils "0.5.0"]
+                 [net.mikera/clojure-utils "0.6.0"]
                  [org.imgscalr/imgscalr-lib "4.2"]
                  [net.mikera/mathz "0.3.0"]
                  [net.mikera/mikera-gui "0.3.1"]
