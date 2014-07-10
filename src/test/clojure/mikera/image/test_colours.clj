@@ -14,4 +14,3 @@
 (deftest test-rand-colour
   (let [rc (rand-colour)]
     (is (== 0xFF000000 (bit-and 0xFF000000 rc)))))
-

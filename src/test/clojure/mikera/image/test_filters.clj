@@ -7,7 +7,12 @@
 
 (deftest test-filter
   (let [^BufferedImage bi (new-image 5 5)
-        ^BufferedImage fi (filter-image (box-blur) bi)]
+        ^BufferedImage fi (filter-image bi (box-blur))]
     (is (not (identical? bi fi)))
     (is (== 5 (.getWidth fi)))))
 
+(deftest test-filter-apply
+  (let [^BufferedImage bi (new-image 5 5)
+        ^BufferedImage fi ((box-blur) bi )]
+    (is (not (identical? bi fi)))
+    (is (== 5 (.getWidth fi))))) 

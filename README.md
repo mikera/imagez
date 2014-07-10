@@ -10,11 +10,14 @@ Contains various utility functions for handling colours and bitmap images.
 ### Example
 
 ```clojure
+(use 'mikera.image.core)
+(require '[mikera.image.filters :as filt])
+
 ;; load an image from a resource file
-(def ant (load-image "mikera/image/samples/Ant.png"))
+(def ant (load-image-resource "mikera/image/samples/Ant.png"))
 
 ;; show the iamge, after applying an "invert" filter
-(show (filter-image (invert) ant))
+(show (filter-image ant (filt/invert)))
 ```
 
 ![Inverted ant](http://clojurefun.files.wordpress.com/2013/05/inverted-ant.png)
@@ -25,19 +28,20 @@ Features so far:
 
 - Creating new images
 - Scaling / zooming images
-- Loading images from resource files
+- Loading images - from ordinary files, resource files, filesystem paths and streams
 - Getting and setting pixels in bulk using primitive arrays
 - Filtering images (blur, contrast, brightness etc.)
 - Various colour handling functions
- 
+- Progressive encoding and controlling the quality of output images.
+
 Imagez is a new library, so the API is being refined. Expect changes / additions on a regular basis. 
- 
+
 ### Using Imagez
 
 Simply add the dependency via Clojars: https://clojars.org/net.mikera/imagez
 
 Imagez requires Clojure 1.4 and above.
- 
+
 ### More Examples
 
 ```clojure
@@ -53,7 +57,7 @@ Imagez requires Clojure 1.4 and above.
 ;; fill some random pixels with colours
 (dotimes [i 1024]
   (aset pixels i (rand-colour)))
-  
+
 ;; update the image with the newly changed pixel values
 (set-pixels bi pixels)
 
