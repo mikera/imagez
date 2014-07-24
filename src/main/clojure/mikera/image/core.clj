@@ -32,7 +32,7 @@
                   org.imgscalr.Scalr$Mode/FIT_EXACT
                   (int new-width) (int new-height) nil))
   (^BufferedImage [^BufferedImage image new-width]
-    (resize new-width (/ (* new-width (.getHeight image)) (.getWidth image)))))
+    (resize image new-width (/ (* new-width (.getHeight image)) (.getWidth image)))))
 
 (defn scale-image
   "DEPRECATED: use 'resize' instead"
