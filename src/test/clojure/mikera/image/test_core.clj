@@ -24,6 +24,21 @@
     (is (== 5 (.getWidth bi)))
     (is (== 6 (.getHeight bi)))))
 
+(deftest test-rotate-image
+  (let [^BufferedImage bi (new-image 10 5)
+        r90 (rotate bi :90)
+        r180 (rotate bi :180)
+        r270 (rotate bi :270)]
+    (is (instance? BufferedImage r90))
+    (is (instance? BufferedImage r180))
+    (is (instance? BufferedImage r270))
+    (is (== 5  (.getWidth r90)))
+    (is (== 10 (.getHeight r90)))
+    (is (== 10 (.getWidth r180)))
+    (is (== 5  (.getHeight r180)))
+    (is (== 5  (.getWidth r270)))
+    (is (== 10 (.getHeight r270)))))
+
 (deftest test-scale
   (let [^BufferedImage bi (new-image 10 10)
         bi (scale bi 2.0 3.0)]
