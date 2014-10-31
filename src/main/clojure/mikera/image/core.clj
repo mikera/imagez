@@ -84,16 +84,17 @@
 (defn rotate
   "Rotate an image clockwise by x degrees"
   (^BufferedImage [^BufferedImage image degrees]
-   (cond
-     (= (mod degrees 360) 0)
-       image
-     (=  (mod degrees 360) 90)
-       (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_90 nil)
-     (=  (mod degrees 360) 180)
-       (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_180 nil)
-     (=  (mod degrees 360) 270)
-       (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_270 nil)
-     :else (error "Rotation amount not valid: " degrees " current supported values must be a multiple of 90"))))
+   (let [rot (mod degrees 360)]
+     (cond
+	     (== rot 0)
+	       image
+	     (== rot 90)
+	       (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_90 nil)
+	     (== rot 180)
+	       (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_180 nil)
+	     (== rot 270)
+	       (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_270 nil)
+	     :else (error "Rotation amount not valid: " degrees " current supported values must be a multiple of 90")))))
 
 (defn get-pixels
   "Gets the pixels in a BufferedImage as a primitive int[] array.
