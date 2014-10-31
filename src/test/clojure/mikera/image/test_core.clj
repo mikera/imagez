@@ -25,7 +25,7 @@
     (is (== 6 (.getHeight bi)))))
 
 (deftest test-rotate-image
-  (let [^BufferedImage bi (new-image 10 5)
+  (let [bi (new-image 10 5)
         r90 (rotate bi 90)
         r180 (rotate bi 180)
         r270 (rotate bi 270)]
