@@ -67,13 +67,21 @@
     (set-pixels bi pxs)
     (is (== 0xFFFFFFFF (long-colour (.getRGB bi 0 0))))))
 
+(deftest test-ensure-default-image-type
+  (let [i (ImageIO/read (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png"))]
+    (is (not= BufferedImage/TYPE_INT_ARGB (.getType i)))
+    (is (= BufferedImage/TYPE_INT_ARGB (.getType (ensure-default-image-type i))))))
+
 (deftest test-load-image
-  (are [r] (instance? BufferedImage (load-image r))
-       "src/test/resources/mikera/image/samples/Clojure_300x300.png"
-       (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png")
-       (ImageIO/read (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png"))
-       (resource "mikera/image/samples/Clojure_300x300.png")
-       (input-stream "src/test/resources/mikera/image/samples/Clojure_300x300.png")))
+  (testing "image loading"
+    (are [r] (instance? BufferedImage (load-image r))
+         "src/test/resources/mikera/image/samples/Clojure_300x300.png"
+         (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png")
+         (ImageIO/read (as-file "src/test/resources/mikera/image/samples/Clojure_300x300.png"))
+         (resource "mikera/image/samples/Clojure_300x300.png")
+         (input-stream "src/test/resources/mikera/image/samples/Clojure_300x300.png")))
+  (testing "load image type conversion"
+    (is (= BufferedImage/TYPE_INT_ARGB (.getType (load-image "src/test/resources/mikera/image/samples/Clojure_300x300.png"))))))
 
 (deftest test-compression
   (testing "png"

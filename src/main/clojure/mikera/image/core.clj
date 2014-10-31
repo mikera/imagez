@@ -5,6 +5,7 @@
   (:require [mikera.image.filters :as filt])
   (:require [mikera.image.protocols :as protos])
   (:use mikera.cljutils.error) 
+  (:import [java.awt Graphics2D])
   (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [javax.imageio ImageIO IIOImage ImageWriter ImageWriteParam])
   (:import [org.imgscalr Scalr])
@@ -49,6 +50,17 @@
   (^BufferedImage [^BufferedImage image width-factor height-factor]
     (resize image (* (.getWidth image) width-factor) (* (.getHeight image) height-factor))))
 
+(defn ensure-default-image-type
+  "If the provided image is does not have the default image type
+  (BufferedImage/TYPE_INT_ARGB) a copy with that type is returned."
+  (^BufferedImage [^BufferedImage image]
+    (if (= BufferedImage/TYPE_INT_ARGB (.getType image))
+      image
+      (let [copy (new-image (.getWidth image) (.getHeight image))
+            ^Graphics2D g (.getGraphics copy)]
+        (.drawImage g image nil 0 0)
+        copy))))
+
 (defn load-image
   "Loads a BufferedImage from a string, file or a URL representing a resource
   on the classpath.
@@ -58,7 +70,7 @@
     (load-image \"/some/path/to/image.png\")
     ;; (require [clojure.java.io :refer [resource]])
     (load-image (resource \"some/path/to/image.png\"))"
-  (^BufferedImage [resource] (protos/as-image resource)))
+  (^BufferedImage [resource] (ensure-default-image-type (protos/as-image resource))))
 
 (defn load-image-resource
   "Loads an image from a named resource on the classpath.
