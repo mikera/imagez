@@ -13,9 +13,7 @@
 
 (deftest test-new-image
   (is (instance? BufferedImage (new-image 10 10)))
-  (is (instance? BufferedImage (new-image 10 10 false)))
-  (is (= BufferedImage/TYPE_INT_ARGB (.getType (new-image 10 10))))
-  (is (= BufferedImage/TYPE_INT_RGB (.getType (new-image 10 10 false)))))
+  (is (= BufferedImage/TYPE_INT_ARGB (.getType (new-image 10 10)))))
 
 (deftest test-scale-image
   (let [^BufferedImage bi (new-image 10 10)
