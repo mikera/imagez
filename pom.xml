@@ -35,13 +35,13 @@
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>cljunit</artifactId>
-			<version>0.3.0</version>
+			<version>0.3.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.mikera</groupId>
 			<artifactId>clojure-utils</artifactId>
-			<version>0.6.0</version>
+			<version>0.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.imgscalr</groupId>
