@@ -71,12 +71,27 @@
   (^BufferedImage [^BufferedImage image factor]
     (scale image factor)))
 
-(defn flip [^BufferedImage image direction]
+(defn flip
   "Flips an image in the specified direction :horizontal or :vertical"
-  (cond
-    (= :horizontal direction) (TODO)
-    (= :vertical direction) (TODO)
-    :else (error "Flip direction not valid: " direction))) 
+  (^BufferedImage [^BufferedImage image direction]
+   (cond
+     (= :horizontal direction)
+     (Scalr/rotate image org.imgscalr.Scalr$Rotation/FLIP_HORZ nil)
+     (= :vertical direction)
+     (Scalr/rotate image org.imgscalr.Scalr$Rotation/FLIP_VERT nil)
+     :else (error "Flip direction not valid: " direction))))
+
+(defn rotate
+  "Rotate an image clockwise :90 :180 or :270 degrees"
+  (^BufferedImage [^BufferedImage image direction]
+   (cond
+     (= :90 direction)
+     (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_90 nil)
+     (= :180 direction)
+     (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_180 nil)
+     (= :270 direction)
+     (Scalr/rotate image org.imgscalr.Scalr$Rotation/CW_270 nil)
+     :else (error "Rotation amount not valid: " direction))))
 
 (defn get-pixels
   "Gets the pixels in a BufferedImage as a primitive int[] array.
