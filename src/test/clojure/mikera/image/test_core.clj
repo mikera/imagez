@@ -26,9 +26,9 @@
 
 (deftest test-rotate-image
   (let [^BufferedImage bi (new-image 10 5)
-        r90 (rotate bi :90)
-        r180 (rotate bi :180)
-        r270 (rotate bi :270)]
+        r90 (rotate bi 90)
+        r180 (rotate bi 180)
+        r270 (rotate bi 270)]
     (is (instance? BufferedImage r90))
     (is (instance? BufferedImage r180))
     (is (instance? BufferedImage r270))
