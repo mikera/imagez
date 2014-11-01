@@ -16,7 +16,7 @@
 
 (defn new-image
   "Creates a new BufferedImage with the specified width and height.
-   Uses ARGB format by default."
+   Uses TYPE_INT_ARGB format by default, but also supports TYPE_INT_RGB when alpha channel is not needed."
   (^BufferedImage [width height]
     (new-image width height true))
   (^BufferedImage [width height alpha?]
