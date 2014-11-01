@@ -16,7 +16,8 @@
 
 (defn new-image
   "Creates a new BufferedImage with the specified width and height.
-   Uses TYPE_INT_ARGB format by default, but also supports TYPE_INT_RGB when alpha channel is not needed."
+   Uses BufferedImage/TYPE_INT_ARGB format by default, 
+   but also supports BufferedImage/TYPE_INT_RGB when alpha channel is not needed."
   (^BufferedImage [width height]
     (new-image width height true))
   (^BufferedImage [width height alpha?]
@@ -26,7 +27,7 @@
 
 (defn resize
   "Resizes an image to the specified width and height. If height is omitted,
-  maintains the aspect ratio."
+   maintains the aspect ratio."
   (^BufferedImage [^BufferedImage image new-width new-height]
     (Scalr/resize image
                   org.imgscalr.Scalr$Method/BALANCED
