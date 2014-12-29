@@ -1,4 +1,4 @@
-(defproject imagez "0.3.2-SNAPSHOT"
+(defproject imagez "0.5.0"
   :description "Image processing library for Clojure"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [net.mikera/cljunit "0.3.1"]
