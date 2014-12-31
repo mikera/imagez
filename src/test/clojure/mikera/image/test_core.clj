@@ -89,15 +89,22 @@
           param (.getDefaultWriteParam writer)]
       ;; setting compression quality is not actually supported for PNG, this test
       ;; is just validates that it doesn't crash
-      (is (= param (#'mikera.image.core/apply-compression param 1.0)))))
+      (is (= param (#'mikera.image.core/apply-compression param 1.0 "png")))))
 
   (testing "jpeg"
     (let [^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName "jpeg"))
           param (.getDefaultWriteParam writer)
           compression-fn #'mikera.image.core/apply-compression]
-      (is (= param (#'mikera.image.core/apply-compression param 1.0)))
-      (is (= (.getCompressionQuality ^ImageWriteParam (compression-fn param 1.0)) 1.0))
-      (is (= (.getCompressionQuality ^ImageWriteParam (compression-fn param 0.5)) 0.5)))))
+      (is (= param (#'mikera.image.core/apply-compression param 1.0 "jpeg")))
+      (is (= (.getCompressionQuality ^ImageWriteParam (compression-fn param 1.0 "jpeg")) 1.0))
+      (is (= (.getCompressionQuality ^ImageWriteParam (compression-fn param 0.5 "jpeg")) 0.5))))
+
+  (testing "gif"
+    (let [^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName "gif"))
+          param (.getDefaultWriteParam writer)
+          compression-fn #'mikera.image.core/apply-compression]
+      (is (= param (#'mikera.image.core/apply-compression param 1.0 "gif")))
+      (is (= (.getCompressionType ^ImageWriteParam (compression-fn param 1.0 "gif")) "LZW")))))
 
 (deftest test-progressive
   (let [^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName "jpeg"))
