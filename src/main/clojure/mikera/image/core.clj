@@ -54,7 +54,7 @@
 (defn ensure-default-image-type
   "If the provided image is does not have the default image type
   (BufferedImage/TYPE_INT_ARGB) a copy with that type is returned."
-  (^BufferedImage [^BufferedImage image]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image]
     (if (= BufferedImage/TYPE_INT_ARGB (.getType image))
       image
       (let [copy (new-image (.getWidth image) (.getHeight image))
@@ -71,7 +71,7 @@
     (load-image \"/some/path/to/image.png\")
     ;; (require [clojure.java.io :refer [resource]])
     (load-image (resource \"some/path/to/image.png\"))"
-  (^BufferedImage [resource] (ensure-default-image-type (protos/as-image resource))))
+  (^java.awt.image.BufferedImage [resource] (ensure-default-image-type (protos/as-image resource))))
 
 (defn load-image-resource
   "Loads an image from a named resource on the classpath.
