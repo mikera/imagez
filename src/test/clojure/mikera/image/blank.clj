@@ -1,0 +1,1 @@
+(ns mikera.image.blank)
