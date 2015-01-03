@@ -18,9 +18,9 @@
   "Creates a new BufferedImage with the specified width and height.
    Uses BufferedImage/TYPE_INT_ARGB format by default, 
    but also supports BufferedImage/TYPE_INT_RGB when alpha channel is not needed."
-  (^BufferedImage [width height]
+  (^java.awt.image.BufferedImage [width height]
     (new-image width height true))
-  (^BufferedImage [width height alpha?]
+  (^java.awt.image.BufferedImage [width height alpha?]
     (if alpha?
       (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)
       (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_RGB))))
@@ -28,17 +28,17 @@
 (defn resize
   "Resizes an image to the specified width and height. If height is omitted,
    maintains the aspect ratio."
-  (^BufferedImage [^BufferedImage image new-width new-height]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image new-width new-height]
     (Scalr/resize image
                   org.imgscalr.Scalr$Method/BALANCED
                   org.imgscalr.Scalr$Mode/FIT_EXACT
                   (int new-width) (int new-height) nil))
-  (^BufferedImage [^BufferedImage image new-width]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image new-width]
     (resize image new-width (/ (* new-width (.getHeight image)) (.getWidth image)))))
 
 (defn scale-image
   "DEPRECATED: use 'resize' instead"
-  (^BufferedImage [^BufferedImage image new-width new-height]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image new-width new-height]
     (Scalr/resize image
                   org.imgscalr.Scalr$Method/BALANCED
                   org.imgscalr.Scalr$Mode/FIT_EXACT
@@ -46,9 +46,9 @@
 
 (defn scale
   "Scales an image by a given factor or ratio."
-  (^BufferedImage [^BufferedImage image factor]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image factor]
     (resize image (* (.getWidth image) factor) (* (.getHeight image) factor)))
-  (^BufferedImage [^BufferedImage image width-factor height-factor]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image width-factor height-factor]
     (resize image (* (.getWidth image) width-factor) (* (.getHeight image) height-factor))))
 
 (defn ensure-default-image-type
@@ -77,16 +77,16 @@
   "Loads an image from a named resource on the classpath.
 
    Equivalent to (load-image (clojure.java.io/resource res-path))"
-  (^BufferedImage [res-path] (load-image (resource res-path))))
+  (^java.awt.image.BufferedImage [res-path] (load-image (resource res-path))))
 
 (defn zoom
   "Zooms into (scales) an image with a given scale factor."
-  (^BufferedImage [^BufferedImage image factor]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image factor]
     (scale image factor)))
 
 (defn flip
   "Flips an image in the specified direction :horizontal or :vertical"
-  (^BufferedImage [^BufferedImage image direction]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image direction]
    (cond
      (= :horizontal direction)
      (Scalr/rotate image org.imgscalr.Scalr$Rotation/FLIP_HORZ nil)
@@ -96,7 +96,7 @@
 
 (defn rotate
   "Rotate an image clockwise by x degrees"
-  (^BufferedImage [^BufferedImage image degrees]
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image degrees]
    (let [rot (mod degrees 360)]
      (cond
 	     (== rot 0)
@@ -112,13 +112,13 @@
 (defn get-pixels
   "Gets the pixels in a BufferedImage as a primitive int[] array.
    This is often an efficient format for manipulating an image."
-  (^ints [^BufferedImage image]
+  (^ints [^java.awt.image.BufferedImage image]
     (.getDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) nil)))
 
 (defn set-pixels
   "Sets the pixels in a BufferedImage using a primitive int[] array.
    This is often an efficient format for manipulating an image."
-  ([^BufferedImage image ^ints pixels]
+  ([^java.awt.image.BufferedImage image ^ints pixels]
     (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
 
 (defn filter-image
@@ -126,7 +126,7 @@
   Filter may be either a BufferedImageOp or an Imagez filter.
 
    Returns a new image."
-  (^BufferedImage [^java.awt.image.BufferedImage image
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image
                    filter]
   (let [filter (filt/to-image-op filter)
         dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
@@ -135,13 +135,13 @@
 
 (defn sub-image
   "Gets a sub-image area from an image."
-  (^BufferedImage [^BufferedImage image x y w h]
+  (^java.awt.image.BufferedImage [^BufferedImage image x y w h]
     (.getSubimage image (int x) (int y) (int w) (int h))))
 
 (defn gradient-image
   "Creates an image filled with a gradient according to the given spectrum function.
    Default is a filled gradient from left=0 to right=1."
-  (^BufferedImage [spectrum-fn w h]
+  (^java.awt.image.BufferedImage [spectrum-fn w h]
     (let [w (int w)
           h (int h)
           im (BufferedImage. w h BufferedImage/TYPE_INT_ARGB)
@@ -150,7 +150,7 @@
         (.setColor g (col/color (spectrum-fn (/ (double i) w))))
         (.fillRect g (int i) (int 0) (int 1) (int h)))
       im))
-  (^BufferedImage [spectrum-fn]
+  (^java.awt.image.BufferedImage [spectrum-fn]
     (gradient-image spectrum-fn 200 60)))
 
 (defn show
@@ -158,26 +158,26 @@
 
    The frame includes simple menus for saving an image, and other handy utilities."
   ([image & {:keys [zoom title]}]
-    (let [^BufferedImage image (if zoom (mikera.image.core/zoom image (double zoom)) image)
+    (let [^java.awt.image.BufferedImage image (if zoom (mikera.image.core/zoom image (double zoom)) image)
           ^String title (or title "Imagez Frame")]
       (Frames/display image title))))
 
-(defn- ^ImageWriteParam apply-compression
+(defn- ^javax.imageio.ImageWriteParam apply-compression
   "Applies compression to the write parameter, if possible."
-  [^ImageWriteParam write-param quality]
+  [^javax.imageio.ImageWriteParam write-param quality]
   (when (.canWriteCompressed write-param)
     (doto write-param
       (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)
       (.setCompressionQuality quality)))
   write-param)
 
-(defn- ^ImageWriteParam apply-progressive
+(defn- ^javax.imageio.ImageWriteParam apply-progressive
   "Applies progressive encoding, if possible.
 
   If `progressive-flag` is `true`, turns progressive encoding on, `false`
   turns it off. Defaults to `ImageWriteParam/MODE_COPY_FROM_METADATA`, which
   is the default in ImageIO API."
-  [^ImageWriteParam write-param progressive-flag]
+  [^javax.imageio.ImageWriteParam write-param progressive-flag]
   (when (.canWriteProgressive write-param)
     (let [mode-map {true  ImageWriteParam/MODE_DEFAULT
                     false ImageWriteParam/MODE_DISABLED}
@@ -212,8 +212,8 @@
                                        progressive nil}}]
   (let [outfile (file path)
         ext (-> path (split #"\.") last lower-case)
-        ^ImageWriter writer (.next (ImageIO/getImageWritersByFormatName ext))
-        ^ImageWriteParam write-param (.getDefaultWriteParam writer)
+        ^javax.imageio.ImageWriter writer (.next (ImageIO/getImageWritersByFormatName ext))
+        ^javax.imageio.ImageWriteParam write-param (.getDefaultWriteParam writer)
         iioimage (IIOImage. image nil nil)
         outstream (ImageIO/createImageOutputStream outfile)]
     (apply-compression write-param quality)
