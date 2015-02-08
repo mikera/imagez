@@ -121,6 +121,16 @@
   ([^java.awt.image.BufferedImage image ^ints pixels]
     (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
 
+(defn get-pixel
+  "Gets a single pixel in a BufferedImage."
+  (^long [^java.awt.image.BufferedImage image ^long x ^long y]
+    (.getRGB image x y)))
+
+(defn set-pixel
+  "Sets a single pixel in a BufferedImage."
+  ([^java.awt.image.BufferedImage image ^long x ^long y ^long rgb]
+    (.setRGB image x y rgb)))
+
 (defn filter-image
   "Applies a filter to a source image.
   Filter may be either a BufferedImageOp or an Imagez filter.
