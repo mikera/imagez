@@ -123,13 +123,13 @@
 
 (defn get-pixel
   "Gets a single pixel in a BufferedImage."
-  (^long [^java.awt.image.BufferedImage image ^long x ^long y]
-    (.getRGB image x y)))
+  ^long [^java.awt.image.BufferedImage image ^long x ^long y]
+  (.getRGB image x y))
 
 (defn set-pixel
   "Sets a single pixel in a BufferedImage."
-  ([^java.awt.image.BufferedImage image ^long x ^long y ^long rgb]
-    (.setRGB image x y rgb)))
+  [^java.awt.image.BufferedImage image ^long x ^long y ^long rgb]
+  (.setRGB image x y rgb))
 
 (defn filter-image
   "Applies a filter to a source image.
