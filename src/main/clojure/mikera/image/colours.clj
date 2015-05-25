@@ -13,7 +13,7 @@
   `(bit-and 0xFFFFFFFF ~x)))
 
 (defn rgb
-  "Get the integer ARGB colour value specified by the RGB colour components.
+  "Get the long ARGB colour value specified by the RGB colour components.
 
    Unless specified the Alpha value of the resulting colour will be 1.0 (fully opaque)"
   (^long [^Color colour]
@@ -24,7 +24,7 @@
     (long-colour (Colours/getARGBClamped (double a) (double r) (double g) (double b)))))
 
 (defn argb
-  "Get the integer ARGB colour value specified by the ARGB colour components."
+  "Get the long ARGB colour value specified by the ARGB colour components."
   (^long [^Color colour]
     (long-colour (.getRGB colour)))
   (^long [r g b]
