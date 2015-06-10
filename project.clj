@@ -11,5 +11,5 @@
   :repositories {"clojars.org" "http://clojars.org/repo"}
   :parent [net.mikera/clojure-pom "0.4.0"]
   :source-paths ["src/main/clojure"]
-  :test-paths ["src/test/clojure"]
+  :test-paths ["src/test/clojure" "src/test/java"]
   :resource-paths ["src/test/resources"])
