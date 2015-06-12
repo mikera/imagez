@@ -30,6 +30,7 @@ Features so far:
 - Scaling / zooming images
 - Loading images - from ordinary files, resource files, filesystem paths and streams
 - Getting and setting pixels in bulk using primitive arrays
+- Getting and setting individual pixels
 - Filtering images (blur, contrast, brightness etc.)
 - Various colour handling functions
 - Progressive encoding and controlling the quality of output images.

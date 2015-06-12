@@ -4,7 +4,7 @@
   (:require [mikera.image.colours :as col])
   (:require [mikera.image.filters :as filt])
   (:require [mikera.image.protocols :as protos])
-  (:use mikera.cljutils.error) 
+  (:use mikera.cljutils.error)
   (:import [java.awt Graphics2D])
   (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [javax.imageio ImageIO IIOImage ImageWriter ImageWriteParam])
@@ -16,7 +16,7 @@
 
 (defn new-image
   "Creates a new BufferedImage with the specified width and height.
-   Uses BufferedImage/TYPE_INT_ARGB format by default, 
+   Uses BufferedImage/TYPE_INT_ARGB format by default,
    but also supports BufferedImage/TYPE_INT_RGB when alpha channel is not needed."
   (^java.awt.image.BufferedImage [width height]
     (new-image width height true))
@@ -120,6 +120,16 @@
    This is often an efficient format for manipulating an image."
   ([^java.awt.image.BufferedImage image ^ints pixels]
     (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
+
+(defn get-pixel
+  "Gets a single pixel in a BufferedImage."
+  ^long [^java.awt.image.BufferedImage image ^long x ^long y]
+  (.getRGB image x y))
+
+(defn set-pixel
+  "Sets a single pixel in a BufferedImage."
+  [^java.awt.image.BufferedImage image ^long x ^long y ^long rgb]
+  (.setRGB image x y rgb))
 
 (defn filter-image
   "Applies a filter to a source image.
