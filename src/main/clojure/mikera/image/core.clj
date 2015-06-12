@@ -164,11 +164,16 @@
 
 (defn- ^javax.imageio.ImageWriteParam apply-compression
   "Applies compression to the write parameter, if possible."
-  [^javax.imageio.ImageWriteParam write-param quality]
-  (when (.canWriteCompressed write-param)
-    (doto write-param
-      (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)
-      (.setCompressionQuality quality)))
+  [^javax.imageio.ImageWriteParam write-param quality ext]
+  (cond (= ext "gif")
+        (doto write-param
+          (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)
+          (.setCompressionType "LZW"))
+
+        (.canWriteCompressed write-param)
+        (doto write-param
+          (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)
+          (.setCompressionQuality quality)))
   write-param)
 
 (defn- ^javax.imageio.ImageWriteParam apply-progressive
@@ -216,7 +221,7 @@
         ^javax.imageio.ImageWriteParam write-param (.getDefaultWriteParam writer)
         iioimage (IIOImage. image nil nil)
         outstream (ImageIO/createImageOutputStream outfile)]
-    (apply-compression write-param quality)
+    (apply-compression write-param quality ext)
     (apply-progressive write-param progressive)
     (doto writer
       (.setOutput outstream)
