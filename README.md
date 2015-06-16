@@ -5,7 +5,7 @@ Image processing library for Clojure
 
 Contains various utility functions for handling colours and bitmap images.
 
-[![Build Status](https://travis-ci.org/mikera/imagez.png?branch=develop)](https://travis-ci.org/mikera/imagez)
+[![Clojars Project](http://clojars.org/net.mikera/imagez/latest-version.svg)](http://clojars.org/net.mikera/imagez) [![Build Status](https://travis-ci.org/mikera/imagez.png?branch=develop)](https://travis-ci.org/mikera/imagez)
 
 ### Example
 
