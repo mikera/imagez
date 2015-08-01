@@ -31,7 +31,7 @@
   `(Math/max 0.0 (Math/min (double ~max) (double ~exp))))
 
 (defn dither 
-  "Dithers an image. Palette function should take an long colour value and return an long colour result."
+  "Dithers an image. Palette function should take an double component values and return an long colour result."
   ([^BufferedImage image 
     palette-function]
     (let [w (long (core/width image))
