@@ -21,8 +21,8 @@
   (let [^BufferedImage bi (new-image 10 10)
         bi (scale-image bi 5 6)]
     (is (instance? BufferedImage bi))
-    (is (== 5 (.getWidth bi)))
-    (is (== 6 (.getHeight bi)))))
+    (is (== 5 (width bi)))
+    (is (== 6 (height bi)))))
 
 (deftest test-rotate-image
   (let [bi (new-image 10 5)

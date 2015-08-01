@@ -131,6 +131,16 @@
   [^java.awt.image.BufferedImage image ^long x ^long y ^long rgb]
   (.setRGB image x y rgb))
 
+(defn width 
+  "Gets the width of an image as a long value"
+  (^long [^BufferedImage image]
+    (.getWidth image)))
+
+(defn height 
+  "Gets the height of an image as a long value"
+  (^long [^BufferedImage image]
+    (.getHeight image)))
+
 (defn filter-image
   "Applies a filter to a source image.
   Filter may be either a BufferedImageOp or an Imagez filter.
