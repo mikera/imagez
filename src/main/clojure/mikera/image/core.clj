@@ -25,6 +25,15 @@
       (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)
       (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_RGB))))
 
+(defn copy 
+  "Copies an image to a new BufferedImage"
+  ([^BufferedImage src]
+    (let [w (width src)
+          h (height src)
+          dst (new-image w h)]
+      (.drawImage (.getGraphics dst) src (int 0) (int 0) nil)
+      dst)))
+
 (defn resize
   "Resizes an image to the specified width and height. If height is omitted,
    maintains the aspect ratio."

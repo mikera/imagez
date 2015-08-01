@@ -40,6 +40,21 @@
     (bit-shift-right (bit-and argb 0x0000FF00) 8)
     (bit-and argb 0x000000FF)]))
 
+(defmacro extract-red
+  "Extracts the long red value from a long colour"
+  ([c]
+    `(bit-shift-right (bit-and (long ~c) 0x00FF0000) 16)))
+
+(defmacro extract-green
+  "Extracts the long green value from a long colour"
+  ([c]
+    `(bit-shift-right (bit-and (long ~c) 0x0000FF00) 8)))
+
+(defmacro extract-blue
+  "Extracts the long blue value from a long colour"
+  ([c]
+    `(bit-and (long ~c) 0x000000FF)))
+
 (defn components-rgb
   "Return the RGB components of a colour value, in a 3-element vector of long values"
   ([^long argb]

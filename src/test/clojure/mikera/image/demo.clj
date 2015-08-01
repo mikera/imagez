@@ -3,6 +3,7 @@
   (:use mikera.image.core)
   (:use mikera.image.filters)
   (:use mikera.image.spectrum)
+  (:use mikera.image.dither)
   (:require [clojure.java.io :refer [resource]]))
 
 ;; load an image from a packaged resouce on the classpath
@@ -19,6 +20,10 @@
 	(show ((contrast 0.5) ant))
 	(show ((brightness 2.0) ant))
 	(show ((invert) ant))
+ 
+  ;; dithering
+  (show (dither ant (colour-palette-function 4)))
+  (show (dither ant (mono-palette-function)))
 
 	;; demo of visualising a colour gradient
 	(show (gradient-image wheel))
