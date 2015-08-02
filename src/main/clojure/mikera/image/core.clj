@@ -14,6 +14,8 @@
 (set! *unchecked-math* true)
 (set! *warn-on-reflection* true)
 
+(declare width height)
+
 (defn new-image
   "Creates a new BufferedImage with the specified width and height.
    Uses BufferedImage/TYPE_INT_ARGB format by default,
