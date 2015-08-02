@@ -63,20 +63,20 @@
                   eg (- g (col/extract-green dc))
                   eb (- b (col/extract-blue dc))]
               (core/set-pixel result x y dc)
-              (let [z 0.57 i (inc x)] 
+              (let [z 0.35 i (inc x)] 
                 (aset er0 i (+ (* z er) (aget er0 i)))
                 (aset eg0 i (+ (* z eg) (aget eg0 i)))
                 (aset eb0 i (+ (* z eb) (aget eb0 i))))
               (when (> x 0)
-                (let [z 0.13 i (dec x)]
+                (let [z 0.32 i (dec x)]
                   (aset er1 i (+ (* z er) (aget er1 i)))
                   (aset eg1 i (+ (* z eg) (aget eg1 i)))
                   (aset eb1 i (+ (* z eb) (aget eb1 i)))))
-              (let [z 0.17 i x]
+              (let [z 0.22 i x]
                 (aset er1 i (+ (* z er) (aget er1 i)))
                 (aset eg1 i (+ (* z eg) (aget eg1 i)))
                 (aset eb1 i (+ (* z eb) (aget eb1 i))))
-              (let [z 0.13 i (inc x)]
+              (let [z 0.11 i (inc x)]
                 (aset er1 i (+ (* z er) (aget er1 i)))
                 (aset eg1 i (+ (* z eg) (aget eg1 i)))
                 (aset eb1 i (+ (* z eb) (aget eb1 i))))))
