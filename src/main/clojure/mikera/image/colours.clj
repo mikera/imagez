@@ -57,10 +57,10 @@
 
 (defn components-rgb
   "Return the RGB components of a colour value, in a 3-element vector of long values"
-  ([^long argb]
-   [(bit-shift-right (bit-and argb 0x00FF0000) 16)
-    (bit-shift-right (bit-and argb 0x0000FF00) 8)
-    (bit-and argb 0x000000FF)]))
+  ([^long rgb]
+   [(bit-shift-right (bit-and rgb 0x00FF0000) 16)
+    (bit-shift-right (bit-and rgb 0x0000FF00) 8)
+    (bit-and rgb 0x000000FF)]))
 
 (defn rand-colour
   "Returns a random RGB colour value with 100% alpha"
