@@ -13,7 +13,7 @@
   `(bit-and 0xFFFFFFFF ~x)))
 
 (defn rgb
-  "Get the long ARGB colour value specified by the RGB colour components.
+  "Get the long ARGB colour value specified by the RGB colour values (expresed in range 0.0-1.0).
 
    Unless specified the Alpha value of the resulting colour will be 1.0 (fully opaque)"
   (^long [^Color colour]
@@ -24,7 +24,7 @@
     (long-colour (Colours/getARGBClamped (double a) (double r) (double g) (double b)))))
 
 (defn argb
-  "Get the long ARGB colour value specified by the ARGB colour components."
+  "Get the long ARGB colour value specified by the ARGB colour values (expresed in range 0.0-1.0)."
   (^long [^Color colour]
     (long-colour (.getRGB colour)))
   (^long [r g b]
@@ -33,7 +33,7 @@
     (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
 (defn components-argb
-  "Return the ARGB components of a colour value, in a 4-element vector of long values"
+  "Return the ARGB components of a colour value, in a 4-element vector of long values (range 0-255)"
   ([^long argb]
    [(bit-shift-right (bit-and argb 0xFF000000) 24)
     (bit-shift-right (bit-and argb 0x00FF0000) 16)
@@ -41,22 +41,22 @@
     (bit-and argb 0x000000FF)]))
 
 (defmacro extract-red
-  "Extracts the long red value from a long colour"
+  "Extracts the long red component (range 0-255) from a long colour"
   ([c]
     `(bit-shift-right (bit-and (long ~c) 0x00FF0000) 16)))
 
 (defmacro extract-green
-  "Extracts the long green value from a long colour"
+  "Extracts the long green component (range 0-255) from a long colour"
   ([c]
     `(bit-shift-right (bit-and (long ~c) 0x0000FF00) 8)))
 
 (defmacro extract-blue
-  "Extracts the long blue value from a long colour"
+  "Extracts the long blue component (range 0-255) from a long colour"
   ([c]
     `(bit-and (long ~c) 0x000000FF)))
 
 (defn components-rgb
-  "Return the RGB components of a colour value, in a 3-element vector of long values"
+  "Return the RGB components of a colour value, in a 3-element vector of long values (range 0-255)"
   ([^long rgb]
    [(bit-shift-right (bit-and rgb 0x00FF0000) 16)
     (bit-shift-right (bit-and rgb 0x0000FF00) 8)
