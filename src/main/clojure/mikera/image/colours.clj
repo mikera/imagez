@@ -61,7 +61,7 @@
 
 (defmacro rgb-from-components
   "Gets the long colour value from combining red, green and blue long component values.
-   The Alpha value of the resulting colour will be 1.0 (fully opaque)
+   The Alpha value of the resulting colour will be fixed at 255 (fully opaque)
    This is implemented as a macro for performance reasons."
   ([r g b]
     `(-> 0xFF000000
@@ -76,7 +76,7 @@
 
 (defmacro argb-from-components
   "Gets the long colour value from combining red, green and blue long component values.
-   If not specified specified the Alpha value of the resulting colour will be 1.0 (fully opaque)
+   If not specified specified the Alpha value of the resulting colour will be 255 (fully opaque)
    This is implemented as a macro for performance reasons."
   ([r g b]
     `(-> 0xFF000000
