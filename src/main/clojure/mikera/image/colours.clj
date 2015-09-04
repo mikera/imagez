@@ -109,6 +109,20 @@
   ([argb]
     `(bit-and (long ~argb) 0x000000FF)))
 
+(defmacro with-components
+  "Macro which extracts the ARGB colour components from a long colour value and binds them to the specified symbols.
+  This is implemented as a macro for performance reasons.
+
+  Intended usage: (with-components [[r g b] some-argb-value] .....)"
+  ([[syms argb] & body]
+    (when-not (vector? syms) (error "with-components expects a vector of symbols to bind"))
+    (let [argbsym (gensym)]
+      `(let [~argbsym (long ~argb)
+             ~@(mapcat (fn [sym mf] [sym (list mf argbsym)]) 
+                       syms 
+                       [`extract-red `extract-green `extract-blue `extract-alpha])]
+         ~@body))))
+
 (defn components-argb
   "Gets the red, green, blue and alpha components of a long colour value. 
    Returns a 4-element vector of long component values (range 0-255)"

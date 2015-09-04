@@ -33,7 +33,7 @@
   ;; change pixels on an image, using colour components     
   (let [temp (copy ant)]
     (dotimes [x 256]
-      (let [[r g b] (components-rgb (get-pixel ant x 20))]
+      (with-components [[r g b] (get-pixel ant x 20)]
         (set-pixel temp x 20 (rgb-from-components b x r))))
     (show temp))     
 )
