@@ -57,6 +57,14 @@
   (^long [r g b a]
     (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
+(defmacro rgb-from-components
+  "Gets the long colour value from combining red, green and blue long component values"
+  ([r g b]
+    `(-> 0xFF000000
+       (bit-or (bit-shift-left (bit-and (long ~r) 0xFF) 16))
+       (bit-or (bit-shift-left (bit-and (long ~g) 0xFF) 8))  
+       (bit-or (bit-and (long ~b) 0xFF)))))
+
 (defmacro extract-alpha
   "Extracts the long alpha component (range 0-255) from a long colour"
   ([argb]
@@ -78,12 +86,13 @@
     `(bit-and (long ~argb) 0x000000FF)))
 
 (defn components-argb
-  "Return the ARGB components of a long colour value, in a 4-element vector of long component values (range 0-255)"
+  "Gets the red, green, blue and alpha components of a long colour value. 
+   Returns a 4-element vector of long component values (range 0-255)"
   ([^long argb]
-   [(extract-alpha argb)
-    (extract-red argb)
+   [(extract-red argb)
     (extract-green argb)
-    (extract-blue argb)]))
+    (extract-blue argb)
+    (extract-alpha argb)]))
 
 (defn components-rgb
   "Return the RGB components of a long colour value, in a 3-element vector of long component values (range 0-255)"
@@ -100,12 +109,13 @@
     (boxed-double-value (extract-blue rgb))]))
 
 (defn values-argb
-  "Return the ARGB components of a long colour value, in a 4-element vector of long values (range 0.0-1.0)"
+  "Gets the red, green, blue and alpha components of a long colour value. 
+   Returns a 4-element vector of long values (range 0.0-1.0)"
   ([^long argb]
-   [(boxed-double-value (extract-alpha argb))
-    (boxed-double-value (extract-red argb))
+   [(boxed-double-value (extract-red argb))
     (boxed-double-value (extract-green argb))
-    (boxed-double-value (extract-blue argb))]))
+    (boxed-double-value (extract-blue argb))
+    (boxed-double-value (extract-alpha argb))]))
 
 (defn rand-colour
   "Returns a random RGB colour value with 100% alpha"

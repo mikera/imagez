@@ -29,4 +29,11 @@
 	(show (gradient-image wheel))
 
         (save ant "/path/to/new-ant.png" :quality 0.9 :progressive true)
+    
+  ;; change pixels on an image, using colour components     
+  (let [temp (copy ant)]
+    (dotimes [x 256]
+      (let [[r g b] (components-rgb (get-pixel ant x 20))]
+        (set-pixel temp x 20 (rgb-from-components b x r))))
+    (show temp))     
 )

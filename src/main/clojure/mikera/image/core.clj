@@ -30,7 +30,7 @@
 
 (defn copy 
   "Copies an image to a new BufferedImage"
-  (^BufferedImage [^BufferedImage src]
+  (^java.awt.image.BufferedImage [^BufferedImage src]
     (let [w (width src)
           h (height src)
           dst (new-image w h)]
@@ -40,17 +40,17 @@
 (defn resize
   "Resizes an image to the specified width and height. If height is omitted,
    maintains the aspect ratio."
-  (^BufferedImage [^BufferedImage image new-width new-height]
+  (^java.awt.image.BufferedImage [^BufferedImage image new-width new-height]
     (Scalr/resize image
                   org.imgscalr.Scalr$Method/BALANCED
                   org.imgscalr.Scalr$Mode/FIT_EXACT
                   (int new-width) (int new-height) nil))
-  (^BufferedImage [^BufferedImage image new-width]
+  (^java.awt.image.BufferedImage [^BufferedImage image new-width]
     (resize image new-width (/ (* new-width (.getHeight image)) (.getWidth image)))))
 
 (defn scale-image
   "DEPRECATED: use 'resize' instead"
-  (^BufferedImage [^BufferedImage image new-width new-height]
+  (^java.awt.image.BufferedImage [^BufferedImage image new-width new-height]
     (Scalr/resize image
                   org.imgscalr.Scalr$Method/BALANCED
                   org.imgscalr.Scalr$Mode/FIT_EXACT
@@ -58,15 +58,15 @@
 
 (defn scale
   "Scales an image by a given factor or ratio."
-  (^BufferedImage [^BufferedImage image factor]
+  (^java.awt.image.BufferedImage [^BufferedImage image factor]
     (resize image (* (.getWidth image) factor) (* (.getHeight image) factor)))
-  (^BufferedImage [^BufferedImage image width-factor height-factor]
+  (^java.awt.image.BufferedImage [^BufferedImage image width-factor height-factor]
     (resize image (* (.getWidth image) width-factor) (* (.getHeight image) height-factor))))
 
 (defn ensure-default-image-type
   "If the provided image is does not have the default image type
   (BufferedImage/TYPE_INT_ARGB) a copy with that type is returned."
-  (^BufferedImage [^BufferedImage image]
+  (^java.awt.image.BufferedImage [^BufferedImage image]
     (if (= BufferedImage/TYPE_INT_ARGB (.getType image))
       image
       (let [copy (new-image (.getWidth image) (.getHeight image))
@@ -89,16 +89,16 @@
   "Loads an image from a named resource on the classpath.
 
    Equivalent to (load-image (clojure.java.io/resource res-path))"
-  (^BufferedImage [res-path] (load-image (resource res-path))))
+  (^java.awt.image.BufferedImage [res-path] (load-image (resource res-path))))
 
 (defn zoom
   "Zooms into (scales) an image with a given scale factor."
-  (^BufferedImage [^java.awt.image.BufferedImage image factor]
+  (^java.awt.image.BufferedImage [^BufferedImage image factor]
     (scale image factor)))
 
 (defn flip
   "Flips an image in the specified direction :horizontal or :vertical"
-  (^BufferedImage [^BufferedImage image direction]
+  (^java.awt.image.BufferedImage [^BufferedImage image direction]
    (cond
      (= :horizontal direction)
      (Scalr/rotate image org.imgscalr.Scalr$Rotation/FLIP_HORZ nil)
@@ -108,7 +108,7 @@
 
 (defn rotate
   "Rotate an image clockwise by x degrees"
-  (^BufferedImage [^BufferedImage image degrees]
+  (^java.awt.image.BufferedImage [^BufferedImage image degrees]
    (let [rot (mod degrees 360)]
      (cond
 	     (== rot 0)
@@ -130,7 +130,7 @@
 (defn set-pixels
   "Sets the pixels in a BufferedImage using a primitive int[] array.
    This is often an efficient format for manipulating an image."
-  ([^BufferedImage image ^ints pixels]
+  ([^java.awt.image.BufferedImage image ^ints pixels]
     (.setDataElements (.getRaster image) 0 0 (.getWidth image) (.getHeight image) pixels)))
 
 (defn get-pixel
@@ -158,7 +158,7 @@
   Filter may be either a BufferedImageOp or an Imagez filter.
 
    Returns a new image."
-  (^BufferedImage [^java.awt.image.BufferedImage image
+  (^java.awt.image.BufferedImage [^java.awt.image.BufferedImage image
     filter]
   (let [filter (filt/to-image-op filter)
         dest-img (.createCompatibleDestImage filter image (.getColorModel image))]
@@ -167,13 +167,13 @@
 
 (defn sub-image
   "Gets a sub-image area from an image."
-  (^BufferedImage [^BufferedImage image x y w h]
+  (^java.awt.image.BufferedImage [^BufferedImage image x y w h]
     (.getSubimage image (int x) (int y) (int w) (int h))))
 
 (defn gradient-image
   "Creates an image filled with a gradient according to the given spectrum function.
    Default is a filled gradient from left=0 to right=1."
-  (^BufferedImage [spectrum-fn w h]
+  (^java.awt.image.BufferedImage [spectrum-fn w h]
     (let [w (int w)
           h (int h)
           im (BufferedImage. w h BufferedImage/TYPE_INT_ARGB)
@@ -182,7 +182,7 @@
         (.setColor g (col/color (spectrum-fn (/ (double i) w))))
         (.fillRect g (int i) (int 0) (int 1) (int h)))
       im))
-  (^BufferedImage [spectrum-fn]
+  (^java.awt.image.BufferedImage [spectrum-fn]
     (gradient-image spectrum-fn 200 60)))
 
 (defn show
@@ -244,7 +244,7 @@
     (save image \"/path/to/new/image/jpg\" :quality 0.7 :progressive true)
 
   Returns the path to the saved image when saved successfully."
-  [^BufferedImage image path & {:keys [quality progressive]
+  [^java.awt.image.BufferedImage image path & {:keys [quality progressive]
                                   :or {quality 0.8
                                        progressive nil}}]
   (let [outfile (file path)
