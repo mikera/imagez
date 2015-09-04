@@ -1,4 +1,17 @@
 (ns mikera.image.colours
+  "Namespace for colour handling and conversion functions.
+
+   Note there are 4 different ways to specify colours:
+   1. long colour values (entire colour expressed as a single long) - e.g. 0xFF00FF00
+   2. long component values (individual alpha, red, green, blue) - e.g. [255 234 0 101]
+   3. double colour values (individual alpha, red, green, blue) - e.g. [0.5 0.5 0.5]
+   4. Java Color instances - e.g. java.awt.Color/BLACK
+
+   Care should be taken to use the appropriate function. Typically:
+   1. Offers the best performance
+   2. Useful for manipulating 1.
+   3. Useful for high precision computations, or colours outside normal ranges
+   4. Useful for Java interop"
   (:use [mikera.cljutils error])
   (:import [mikera.image Colours])
   (:import [mikera.util Rand])
