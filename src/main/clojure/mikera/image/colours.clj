@@ -40,16 +40,18 @@
 (defn rgb
   "Get the long ARGB colour value specified by the RGB colour values (expresed in range 0.0-1.0).
 
-   Unless specified the Alpha value of the resulting colour will be 1.0 (fully opaque)"
+   The Alpha value of the resulting colour will be 1.0 (fully opaque)"
   (^long [^Color colour]
     (bit-or 0xFF000000 (long-colour (.getRGB colour))))
   (^long [r g b]
     (long-colour (Colours/getRGBClamped (double r) (double g) (double b))))
   (^long [r g b a]
-    (long-colour (Colours/getARGBClamped (double a) (double r) (double g) (double b)))))
+    (long-colour (Colours/getRGBClamped (double r) (double g) (double b)))))
 
 (defn argb
-  "Get the long ARGB colour value specified by the ARGB colour values (expresed in range 0.0-1.0)."
+  "Get the long ARGB colour value specified by the ARGB colour values (expresed in range 0.0-1.0).
+
+   If not specified specified the Alpha value of the resulting colour will be 1.0 (fully opaque)"
   (^long [^Color colour]
     (long-colour (.getRGB colour)))
   (^long [r g b]
@@ -58,9 +60,31 @@
     (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
 (defmacro rgb-from-components
-  "Gets the long colour value from combining red, green and blue long component values"
+  "Gets the long colour value from combining red, green and blue long component values.
+   The Alpha value of the resulting colour will be 1.0 (fully opaque)
+   This is implemented as a macro for performance reasons."
   ([r g b]
     `(-> 0xFF000000
+       (bit-or (bit-shift-left (bit-and (long ~r) 0xFF) 16))
+       (bit-or (bit-shift-left (bit-and (long ~g) 0xFF) 8))  
+       (bit-or (bit-and (long ~b) 0xFF))))
+  ([r g b a]
+    `(-> 0xFF000000
+       (bit-or (bit-shift-left (bit-and (long ~r) 0xFF) 16))
+       (bit-or (bit-shift-left (bit-and (long ~g) 0xFF) 8))  
+       (bit-or (bit-and (long ~b) 0xFF)))))
+
+(defmacro argb-from-components
+  "Gets the long colour value from combining red, green and blue long component values.
+   If not specified specified the Alpha value of the resulting colour will be 1.0 (fully opaque)
+   This is implemented as a macro for performance reasons."
+  ([r g b]
+    `(-> 0xFF000000
+       (bit-or (bit-shift-left (bit-and (long ~r) 0xFF) 16))
+       (bit-or (bit-shift-left (bit-and (long ~g) 0xFF) 8))  
+       (bit-or (bit-and (long ~b) 0xFF))))
+  ([r g b a]
+    `(-> (bit-shift-left (bit-and (long ~a) 0xFF) 24)
        (bit-or (bit-shift-left (bit-and (long ~r) 0xFF) 16))
        (bit-or (bit-shift-left (bit-and (long ~g) 0xFF) 8))  
        (bit-or (bit-and (long ~b) 0xFF)))))
