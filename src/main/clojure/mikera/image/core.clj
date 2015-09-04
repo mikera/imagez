@@ -1,4 +1,5 @@
 (ns mikera.image.core
+  "Main namespace for imagez image processing functionality"
   (:require [clojure.java.io :refer [file resource]])
   (:require [clojure.string :refer [lower-case split]])
   (:require [mikera.image.colours :as col])
