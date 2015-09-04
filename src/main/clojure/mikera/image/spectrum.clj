@@ -1,4 +1,6 @@
 (ns mikera.image.spectrum
+  "Namespce for colour spectrum functions. These functions convert a double value from 0.0 to 1.0 to a 
+   long ARGB colour value."
   (:use [mikera.image.colours])
   (:import [mikera.util Maths])
   (:import [java.awt.image BufferedImage]))
