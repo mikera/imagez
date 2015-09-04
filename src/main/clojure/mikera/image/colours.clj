@@ -26,6 +26,7 @@
   `(bit-and 0xFFFFFFFF ~x)))
 
 ;; A cache of boxed Double values
+;; This is needed to avoid new allocations of boxed Doubles when converting long component values
 (def ^{:static true
        :tag "[Ljava.lang.Double;"} 
      DOUBLE-CACHE 
@@ -106,8 +107,6 @@
     (boxed-double-value (extract-green argb))
     (boxed-double-value (extract-blue argb))]))
 
-
-
 (defn rand-colour
   "Returns a random RGB colour value with 100% alpha"
   (^long []
@@ -119,6 +118,7 @@
     (bit-or 0xFF000000 (* 0x10101 (Rand/r 0x100)))))
 
 (defn color
+  "Creates a java.awt.Color instance representing the given ARGB long colour values"
   (^Color [rgba]
     (let [rgba (int rgba)]
       (Color. rgba true))))
