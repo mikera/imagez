@@ -1,4 +1,5 @@
 (ns mikera.image.dither
+  "Namespace that implements dithering functionality, using error diffusion."
   (:require [mikera.image.core :as core])
   (:require [mikera.image.colours :as col])
   (:import [java.awt.image BufferedImage BufferedImageOp]))
