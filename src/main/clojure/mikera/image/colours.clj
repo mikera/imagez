@@ -21,9 +21,20 @@
 (set! *unchecked-math* true)
 
 (defmacro long-colour
-  "Macro to convert an integer ARGB value to a long colour value."
+  "Convenience macro to cast an integer ARGB value to a long colour value."
   ([x]
   `(bit-and 0xFFFFFFFF ~x)))
+
+;; A cache of boxed Double values
+(def ^{:static true
+       :tag "[Ljava.lang.Double;"} 
+     DOUBLE-CACHE 
+  (into-array Double (map (fn [x] (/ x 255.0)) (range 256))))
+
+(defmacro boxed-double-value
+  "Convenient macro to convert a long component value to a double. Uses a cache of Double values."
+  ([x]
+    `(aget DOUBLE-CACHE (long ~x))))
 
 (defn rgb
   "Get the long ARGB colour value specified by the RGB colour values (expresed in range 0.0-1.0).
@@ -46,12 +57,34 @@
     (long-colour (Colours/getARGBClamped (double a)  (double r) (double g) (double b)))))
 
 (defn components-argb
-  "Return the ARGB components of a colour value, in a 4-element vector of long values (range 0-255)"
+  "Return the ARGB components of a long colour value, in a 4-element vector of long component values (range 0-255)"
   ([^long argb]
    [(bit-shift-right (bit-and argb 0xFF000000) 24)
     (bit-shift-right (bit-and argb 0x00FF0000) 16)
     (bit-shift-right (bit-and argb 0x0000FF00) 8)
     (bit-and argb 0x000000FF)]))
+
+(defn components-rgb
+  "Return the RGB components of a long colour value, in a 3-element vector of long component values (range 0-255)"
+  ([^long rgb]
+   [(bit-shift-right (bit-and rgb 0x00FF0000) 16)
+    (bit-shift-right (bit-and rgb 0x0000FF00) 8)
+    (bit-and rgb 0x000000FF)]))
+
+(defn values-rgb
+  "Return the RGB components of a long colour value, in a 3-element vector of double values (range 0.0-1.0)"
+  ([^long argb]
+   [(boxed-double-value (bit-shift-right (bit-and argb 0xFF000000) 24))
+    (boxed-double-value (bit-shift-right (bit-and argb 0x00FF0000) 16))
+    (boxed-double-value (bit-shift-right (bit-and argb 0x0000FF00) 8))]))
+
+(defn values-argb
+  "Return the ARGB components of a long colour value, in a 4-element vector of long values (range 0.0-1.0)"
+  ([^long argb]
+   [(boxed-double-value (bit-shift-right (bit-and argb 0xFF000000) 24))
+    (boxed-double-value (bit-shift-right (bit-and argb 0x00FF0000) 16))
+    (boxed-double-value (bit-shift-right (bit-and argb 0x0000FF00) 8))
+    (boxed-double-value (bit-and argb 0x000000FF))]))
 
 (defmacro extract-red
   "Extracts the long red component (range 0-255) from a long colour"
@@ -68,12 +101,6 @@
   ([c]
     `(bit-and (long ~c) 0x000000FF)))
 
-(defn components-rgb
-  "Return the RGB components of a colour value, in a 3-element vector of long values (range 0-255)"
-  ([^long rgb]
-   [(bit-shift-right (bit-and rgb 0x00FF0000) 16)
-    (bit-shift-right (bit-and rgb 0x0000FF00) 8)
-    (bit-and rgb 0x000000FF)]))
 
 (defn rand-colour
   "Returns a random RGB colour value with 100% alpha"

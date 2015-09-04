@@ -14,3 +14,6 @@
 (deftest test-rand-colour
   (let [rc (rand-colour)]
     (is (== 0xFF000000 (bit-and 0xFF000000 rc)))))
+
+(deftest test-double-cache
+  (is (identical? (boxed-double-value 100) (boxed-double-value 100))))
