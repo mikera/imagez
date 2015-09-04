@@ -17,3 +17,6 @@
 
 (deftest test-double-cache
   (is (identical? (boxed-double-value 100) (boxed-double-value 100))))
+
+(deftest test-color
+  (is (instance? java.awt.Color (color 0xFFFFFFFF))))

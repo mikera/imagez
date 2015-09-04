@@ -119,9 +119,8 @@
 
 (defn color
   "Creates a java.awt.Color instance representing the given ARGB long colour values"
-  (^Color [rgba]
-    (let [rgba (int rgba)]
-      (Color. rgba true))))
+  (^Color [^long argb]
+    (Color. (unchecked-int argb) true)))
 
 (def JAVA-COLOURS
   '(black blue cyan darkGray gray green lightGray magenta
