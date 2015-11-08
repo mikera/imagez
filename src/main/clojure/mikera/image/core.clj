@@ -12,8 +12,8 @@
   (:import [org.imgscalr Scalr])
   (:import [mikera.gui Frames]))
 
-(set! *unchecked-math* true)
-(set! *warn-on-reflection* :warn-on-boxed)
+(set! *unchecked-math* :warn-on-boxed)
+(set! *warn-on-reflection* true)
 
 (declare width height)
 
@@ -46,7 +46,7 @@
                   org.imgscalr.Scalr$Mode/FIT_EXACT
                   (int new-width) (int new-height) nil))
   (^java.awt.image.BufferedImage [^BufferedImage image new-width]
-    (resize image new-width (/ (* new-width (.getHeight image)) (.getWidth image)))))
+    (resize image new-width (/ (* (long new-width) (.getHeight image)) (.getWidth image)))))
 
 (defn scale-image
   "DEPRECATED: use 'resize' instead"
@@ -162,9 +162,10 @@
       :else (error "Can't get graphics for type: " (class image)))))
 
 (defn fill-rect!
-  "Fills a rectangle on the image with a specified Java Color. Mutates the image."
-  ([image x y w h ^Color colour]
-    (let [g (graphics image)]
+  "Fills a rectangle on the image with a specified ARGB value or Java Color. Mutates the image."
+  ([image x y w h colour]
+    (let [g (graphics image)
+          ^Color colour (col/to-java-color colour)]
       (.setColor g colour)
       (.fillRect g (int x) (int y) (int w) (int h))
       image)))

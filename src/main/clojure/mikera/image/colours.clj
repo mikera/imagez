@@ -148,7 +148,7 @@
 
 (defn values-argb
   "Gets the red, green, blue and alpha components of a long colour value. 
-   Returns a 4-element vector of long values (range 0.0-1.0)"
+   Returns a 4-element vector of double values (range 0.0-1.0)"
   ([^long argb]
    [(boxed-double-value (extract-red argb))
     (boxed-double-value (extract-green argb))
@@ -169,6 +169,15 @@
   "Creates a java.awt.Color instance representing the given ARGB long colour values"
   (^Color [^long argb]
     (Color. (unchecked-int argb) true)))
+
+(defn to-java-color
+  "Coerces a colour value to a Java Color instance"
+  (^Color [colour]
+    (cond
+      (instance? Color colour) colour
+      (integer? colour) (Color. (unchecked-int argb) true)
+      ;; TODO: vactors of colour values / components
+      :else (error "Don't know how to convert to Java colour: " (class colour)))))
 
 (def JAVA-COLOURS
   '(black blue cyan darkGray gray green lightGray magenta
