@@ -6,7 +6,7 @@
   (:require [mikera.image.filters :as filt])
   (:require [mikera.image.protocols :as protos])
   (:use mikera.cljutils.error)
-  (:import [java.awt Graphics2D])
+  (:import [java.awt Graphics2D Image])
   (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [javax.imageio ImageIO IIOImage ImageWriter ImageWriteParam])
   (:import [org.imgscalr Scalr])
@@ -152,6 +152,11 @@
   "Gets the height of an image as a long value"
   (^long [^BufferedImage image]
     (.getHeight image)))
+
+(defn graphics
+  "Gets the Java Graphics2D object associated with an image"
+  ^Graphics2D [^Image image]
+  (.getGraphics image))
 
 (defn filter-image
   "Applies a filter to a source image.
