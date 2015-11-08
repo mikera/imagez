@@ -13,7 +13,7 @@
   (:import [mikera.gui Frames]))
 
 (set! *unchecked-math* true)
-(set! *warn-on-reflection* :warn-on-boxing)
+(set! *warn-on-reflection* :warn-on-boxed)
 
 (declare width height)
 
