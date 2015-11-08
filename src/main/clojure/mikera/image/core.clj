@@ -59,9 +59,9 @@
 (defn scale
   "Scales an image by a given factor or ratio."
   (^java.awt.image.BufferedImage [^BufferedImage image factor]
-    (resize image (* (.getWidth image) factor) (* (.getHeight image) factor)))
+    (resize image (* (.getWidth image) (double factor)) (* (.getHeight image) (double factor))))
   (^java.awt.image.BufferedImage [^BufferedImage image width-factor height-factor]
-    (resize image (* (.getWidth image) width-factor) (* (.getHeight image) height-factor))))
+    (resize image (* (.getWidth image) (double width-factor)) (* (.getHeight image) (double height-factor)))))
 
 (defn ensure-default-image-type
   "If the provided image is does not have the default image type
@@ -109,7 +109,7 @@
 (defn rotate
   "Rotate an image clockwise by x degrees"
   (^java.awt.image.BufferedImage [^BufferedImage image degrees]
-   (let [rot (mod degrees 360)]
+   (let [rot (double (mod degrees 360))]
      (cond
 	     (== rot 0)
 	       image
