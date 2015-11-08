@@ -155,15 +155,15 @@
 
 (defn graphics
   "Gets the Java Graphics2D object associated with an image"
-  ^Graphics2D [image]
-  (cond 
-    (instance? Graphics2D image) image
-    (instance? Image image) (.getGraphics ^Image image)
-    :else (error "Can't get graphics for type: " (class image))))
+  (^Graphics2D [image]
+    (cond 
+      (instance? Graphics2D image) image
+      (instance? Image image) (.getGraphics ^Image image)
+      :else (error "Can't get graphics for type: " (class image)))))
 
 (defn fill-rect!
   "Fills a rectangle on the image with a specified Java Color. Mutates the image."
-  ([^BufferedImage image x y w h ^Color colour]
+  ([image x y w h ^Color colour]
     (let [g (graphics image)]
       (.setColor g colour)
       (.fillRect g (int x) (int y) (int w) (int h)))))
