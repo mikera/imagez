@@ -1,5 +1,6 @@
 (ns mikera.image.test-pixels
   (:require [mikera.image.core :refer :all]
+            [mikera.image.colours :refer :all]
             [clojure.test :refer :all])
   (:import [java.awt Color]))
 
@@ -10,4 +11,4 @@
     (is (= 0 (get-pixel img 0 0)))
 
     (set-pixel img 0 0 (.getRGB Color/WHITE))
-    (is (= (.getRGB Color/WHITE) (get-pixel img 0 0)))))
+    (is (= (long-colour (.getRGB Color/WHITE)) (get-pixel img 0 0)))))

@@ -6,7 +6,8 @@
   (:import java.awt.image.BufferedImage
            javax.imageio.ImageIO
            javax.imageio.ImageWriter
-           javax.imageio.ImageWriteParam))
+           javax.imageio.ImageWriteParam
+           java.awt.Color))
 
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
@@ -45,6 +46,11 @@
     (is (instance? BufferedImage bi))
     (is (== 20 (.getWidth bi)))
     (is (== 30 (.getHeight bi)))))
+
+(deftest test-fill-rect!
+  (let [^BufferedImage bi (new-image 10 10)
+        bi (fill-rect! bi 0 0 10 10 Color/GREEN)]
+    (is (== 0xFF00FF00 (get-pixel bi 5 5)))))
 
 (deftest test-zoom-image
   (let [^BufferedImage bi (new-image 10 10)

@@ -13,7 +13,7 @@
   (:import [mikera.gui Frames]))
 
 (set! *unchecked-math* true)
-(set! *warn-on-reflection* true)
+(set! *warn-on-reflection* :warn-on-boxing)
 
 (declare width height)
 
@@ -136,7 +136,7 @@
 (defn get-pixel
   "Gets a single pixel in a BufferedImage."
   ^long [^BufferedImage image ^long x ^long y]
-  (.getRGB image x y))
+  (bit-and 0xFFFFFFFF (.getRGB image x y)))
 
 (defn set-pixel
   "Sets a single pixel in a BufferedImage."
@@ -166,7 +166,8 @@
   ([image x y w h ^Color colour]
     (let [g (graphics image)]
       (.setColor g colour)
-      (.fillRect g (int x) (int y) (int w) (int h)))))
+      (.fillRect g (int x) (int y) (int w) (int h))
+      image)))
 
 (defn filter-image
   "Applies a filter to a source image.
