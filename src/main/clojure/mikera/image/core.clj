@@ -6,7 +6,7 @@
   (:require [mikera.image.filters :as filt])
   (:require [mikera.image.protocols :as protos])
   (:use mikera.cljutils.error)
-  (:import [java.awt Graphics2D Image])
+  (:import [java.awt Graphics2D Image Color])
   (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [javax.imageio ImageIO IIOImage ImageWriter ImageWriteParam])
   (:import [org.imgscalr Scalr])
@@ -155,8 +155,18 @@
 
 (defn graphics
   "Gets the Java Graphics2D object associated with an image"
-  ^Graphics2D [^Image image]
-  (.getGraphics image))
+  ^Graphics2D [image]
+  (cond 
+    (instance? Graphics2D image) image
+    (instance? Image image) (.getGraphics ^Image image)
+    :else (error "Can't get graphics for type: " (class image))))
+
+(defn fill-rect!
+  "Fills a rectangle on the image with a specified Java Color. Mutates the image."
+  ([^BufferedImage image x y w h ^Color colour]
+    (let [g (graphics image)]
+      (.setColor g colour)
+      (.fillRect g (int x) (int y) (int w) (int h)))))
 
 (defn filter-image
   "Applies a filter to a source image.
