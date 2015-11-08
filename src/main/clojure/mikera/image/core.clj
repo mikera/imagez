@@ -136,12 +136,12 @@
 (defn get-pixel
   "Gets a single pixel in a BufferedImage."
   ^long [^BufferedImage image ^long x ^long y]
-  (bit-and 0xFFFFFFFF (.getRGB image x y)))
+  (bit-and 0xFFFFFFFF (.getRGB image (int x) (int y))))
 
 (defn set-pixel
   "Sets a single pixel in a BufferedImage."
   [^BufferedImage image ^long x ^long y ^long rgb]
-  (.setRGB image x y rgb))
+  (.setRGB image (int x) (int y) (unchecked-int rgb)))
 
 (defn width 
   "Gets the width of an image as a long value"
