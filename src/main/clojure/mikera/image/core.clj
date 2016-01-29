@@ -1,6 +1,6 @@
 (ns mikera.image.core
   "Main namespace for imagez image processing functionality"
-  (:require [clojure.java.io :refer [file resource]])
+  (:require [clojure.java.io :refer [file resource output-stream]])
   (:require [clojure.string :refer [lower-case split]])
   (:require [mikera.image.colours :as col])
   (:require [mikera.image.filters :as filt])
@@ -242,8 +242,13 @@
         (.setProgressiveMode mode-flag))))
   write-param)
 
-(defn save
-  "Stores an image to disk.
+
+(defn write
+  "Writes an image externally.
+
+  `out` will be coerced to a `java.io.OutputStream` as per `clojure.java.io/output-stream`.
+  `format-name` determines the format of the written file. See
+  [ImageIO/getImageWritersByFormatName](https://docs.oracle.com/javase/7/docs/api/javax/imageio/ImageIO.html#getImageWritersByFormatName(java.lang.String))
 
   Accepts optional keyword arguments.
 
@@ -256,25 +261,43 @@
 
   Examples:
 
+    (write image (clojure.java.io/resource \"my/image.png\") \"png\" :quality 1.0)
+    (write image my-output-stream \"jpg\" :progressive false)
+    (write image \"/path/to/new/image/jpg\" \"jpg\" :quality 0.7 :progressive true)
+
+  "
+  [^java.awt.image.BufferedImage image out format-name & {:keys [quality progressive]
+                                                         :or {quality 0.8
+                                                              progressive nil}}]
+  (let [^javax.imageio.ImageWriter writer (.next (ImageIO/getImageWritersByFormatName format-name))
+        ^javax.imageio.ImageWriteParam write-param (.getDefaultWriteParam writer)
+        iioimage (IIOImage. image nil nil)
+        outstream (ImageIO/createImageOutputStream (output-stream out))]
+    (apply-compression write-param quality format-name)
+    (apply-progressive write-param progressive)
+    (doto writer
+      (.setOutput outstream)
+      (.write nil iioimage write-param)
+      (.dispose))
+    (.close outstream)))
+
+(defn save
+  "Stores an image to disk.
+
+  See the documentation of `mikera.image.core/write` for optional arguments.
+
+  Examples:
+
     (save image \"/path/to/new/image.jpg\" :quality 1.0)
     (save image \"/path/to/new/image/jpg\" :progressive false)
     (save image \"/path/to/new/image/jpg\" :quality 0.7 :progressive true)
 
   Returns the path to the saved image when saved successfully."
   [^java.awt.image.BufferedImage image path & {:keys [quality progressive]
-                                  :or {quality 0.8
-                                       progressive nil}}]
+                                               :or {quality 0.8
+                                                    progressive nil}
+                                               :as opts}]
   (let [outfile (file path)
-        ext (-> path (split #"\.") last lower-case)
-        ^javax.imageio.ImageWriter writer (.next (ImageIO/getImageWritersByFormatName ext))
-        ^javax.imageio.ImageWriteParam write-param (.getDefaultWriteParam writer)
-        iioimage (IIOImage. image nil nil)
-        outstream (ImageIO/createImageOutputStream outfile)]
-    (apply-compression write-param quality ext)
-    (apply-progressive write-param progressive)
-    (doto writer
-      (.setOutput outstream)
-      (.write nil iioimage write-param)
-      (.dispose))
-    (.close outstream)
+        ext (-> path (split #"\.") last lower-case)]
+    (apply write image outfile ext opts)
     path))
