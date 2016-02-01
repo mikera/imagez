@@ -7,6 +7,8 @@
            javax.imageio.ImageIO
            javax.imageio.ImageWriter
            javax.imageio.ImageWriteParam
+           java.io.ByteArrayOutputStream
+           java.io.ByteArrayInputStream
            java.awt.Color))
 
 (set! *warn-on-reflection* true)
@@ -123,3 +125,23 @@
       (is (= (.getProgressiveMode ^ImageWriteParam (progressive-fn param true)) ImageWriteParam/MODE_DEFAULT))
       (is (= (.getProgressiveMode ^ImageWriteParam (progressive-fn param false)) ImageWriteParam/MODE_DISABLED))
       (is (= (.getProgressiveMode ^ImageWriteParam (progressive-fn param nil)) ImageWriteParam/MODE_COPY_FROM_METADATA)))))
+
+(deftest test-write
+  (are [path format quality progressive]
+    (let [img (load-image path)
+          baos (ByteArrayOutputStream.)
+          arr (do (write img baos format :quality quality :progressive progressive)
+                  (.toByteArray baos))
+          bais (ByteArrayInputStream. arr)
+          img2 (load-image bais)]
+      (and
+        (instance? BufferedImage img2)
+        (= [(.getWidth img2) (.getHeight img2)] [(.getWidth img) (.getHeight img)])
+        ))
+    "src/test/resources/mikera/image/samples/Clojure_300x300.png" "png" 0.9 true
+    "src/test/resources/mikera/image/samples/Clojure_300x300.png" "jpeg" 0.9 true
+    "src/test/resources/mikera/image/samples/Clojure_300x300.png" "png" 0.9 false
+    "src/test/resources/mikera/image/samples/Clojure_300x300.png" "jpeg" 0.9 false
+    "src/test/resources/mikera/image/samples/Ant.png" "png" 0.8 false
+    "src/test/resources/mikera/image/samples/Ant.png" "jpeg" 0.8 false
+    ))
