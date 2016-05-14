@@ -94,3 +94,13 @@
    "Creates a noise filter"
    (^BufferedImageOp []
      (Filter. (com.jhlabs.image.NoiseFilter.))))
+
+(defn edge
+  "Creates an edge detection filter."
+  (^Filter []
+   (Filter. (com.jhlabs.image.EdgeFilter.))))
+
+(defn laplace
+  "Creates an edge detection filter based on Laplace operators."
+  (^Filter []
+   (Filter. (com.jhlabs.image.LaplaceFilter.))))
