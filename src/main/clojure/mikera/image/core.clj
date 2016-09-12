@@ -193,11 +193,7 @@
 (defn fill!
   "Fills the image with a specified ARGB value or Java Color. Mutates the image."
   ([image colour]
-    (let [g (graphics image)
-          ^Color colour (col/to-java-color colour)]
-      (.setColor g colour)
-      (.fillRect g (int 0) (int 0) (int (width image)) (int (height image)))
-      image)))
+    (fill-rect! image 0 0 (width image) (height image))))
 
 (defn filter-image
   "Applies a filter to a source image.
