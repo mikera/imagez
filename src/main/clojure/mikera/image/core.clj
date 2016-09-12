@@ -193,7 +193,7 @@
 (defn fill!
   "Fills the image with a specified ARGB value or Java Color. Mutates the image."
   ([image colour]
-    (fill-rect! image 0 0 (width image) (height image))))
+    (fill-rect! image 0 0 (width image) (height image) colour)))
 
 (defn filter-image
   "Applies a filter to a source image.

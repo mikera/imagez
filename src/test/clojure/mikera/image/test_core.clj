@@ -1,7 +1,7 @@
 (ns mikera.image.test-core
   (:use mikera.image.core)
   (:use clojure.test)
-  (:require [mikera.image.colours :refer [long-colour]]
+  (:require [mikera.image.colours :as col :refer [long-colour]]
             [clojure.java.io :refer [as-file resource input-stream]])
   (:import java.awt.image.BufferedImage
            javax.imageio.ImageIO
@@ -14,11 +14,24 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* true)
 
+(def TEST-IMAGE (let [img (new-image 2 2)]
+                  (fill! img col/black)
+                  (set-pixel img 0 0 col/clear)
+                  (set-pixel img 1 1 col/green)
+                  img))
+
 (deftest test-new-image
   (is (instance? BufferedImage (new-image 10 10)))
   (is (instance? BufferedImage (new-image 10 10 false)))
   (is (= BufferedImage/TYPE_INT_ARGB (.getType (new-image 10 10))))
   (is (= BufferedImage/TYPE_INT_RGB (.getType (new-image 10 10 false)))))
+
+(deftest test-copy-image
+  (let [img (copy TEST-IMAGE 2.0)]
+    (is (= 4 (width img)))
+    (is (= 4 (height img)))
+    (is (= col/green) (get-pixel img 2 2))
+    (is (= col/clear) (get-pixel img 1 1))))
 
 (deftest test-scale-image
   (let [^BufferedImage bi (new-image 10 10)
