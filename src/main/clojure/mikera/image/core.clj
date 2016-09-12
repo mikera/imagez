@@ -334,4 +334,6 @@
                     (set-pixel img 0 0 col/white)
                     (set-pixel img 1 1 col/green)
                     img))
+  
+  (show (copy test-image 100 100))
   )
