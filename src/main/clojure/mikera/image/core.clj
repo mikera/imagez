@@ -29,12 +29,32 @@
       (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_RGB))))
 
 (defn copy 
-  "Copies an image to a new BufferedImage"
+  "Copies an image to a new BufferedImage.
+
+   May optionally specify the target image dimensions, or a resizing factor. Resizing during copy
+   does *not* perform any interpolation: use scale instead if this is desired."
   (^java.awt.image.BufferedImage [^BufferedImage src]
     (let [w (width src)
           h (height src)
           dst (new-image w h)]
       (.drawImage (.getGraphics dst) src (int 0) (int 0) nil)
+      dst))
+  (^java.awt.image.BufferedImage [^BufferedImage src factor-or-shape]
+      (if (number? factor-or-shape)
+        (let [factor (double factor-or-shape)]
+          (copy src (int (* (double (width src)) factor)) (int (* (double (height src)) factor))))
+        (let [[w h] factor-or-shape]
+          (copy src w h))))
+  (^java.awt.image.BufferedImage [^BufferedImage src target-width target-height]
+    (let [w (width src)
+          h (height src)
+          tw (long target-width)
+          th (long target-height) 
+          dst (new-image tw th)]
+      (.drawImage (.getGraphics dst) src 
+        (int 0) (int 0) (int tw) (int th) ;; dest coordinates
+        (int 0) (int 0) (int w) (int h)          ;; source co-ordinates
+        nil)
       dst)))
 
 (defn resize
@@ -205,11 +225,18 @@
 (defn show
   "Displays an image in a new frame.
 
-   The frame includes simple menus for saving an image, and other handy utilities."
-  ([image & {:keys [zoom title]}]
+   The frame includes simple menus for saving an image, and other handy utilities.
+
+   Options can be supplied in keyword arguments as follows:
+     :zoom   - zoom the image by a specified factor, e.g. 2.0. Performs smoothing
+     :resize - resizes the image by either a specified factor or to a given target shape e.g. [256 256]
+     :title  - specifies the title of the resulting frame
+   "
+  ([image & {:keys [zoom resize title]}]
     (let [^BufferedImage image (if zoom (mikera.image.core/zoom image (double zoom)) image)
-          ^String title (or title "Imagez Frame")]
-      (Frames/display image title))))
+          ^BufferedImage image (if resize (mikera.image.core/copy image resize) image)
+          title (or title "Imagez Frame")]
+      (Frames/display image (str title)))))
 
 (defn- ^javax.imageio.ImageWriteParam apply-compression
   "Applies compression to the write parameter, if possible."
@@ -301,3 +328,10 @@
         ext (-> path (split #"\.") last lower-case)]
     (apply write image outfile ext opts)
     path))
+
+(comment ;; some quick functions for testing
+  (def test-image (let [img (new-image 2 2)]
+                    (set-pixel img 0 0 col/white)
+                    (set-pixel img 1 1 col/green)
+                    img))
+  )
