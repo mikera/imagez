@@ -185,3 +185,5 @@
 
 (doseq [colour JAVA-COLOURS]
   (eval `(def ~(vary-meta colour assoc :const true) (long-colour (.getRGB (. Color ~colour))))))
+
+(def clear (long-colour 0))

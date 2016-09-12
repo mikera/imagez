@@ -341,7 +341,7 @@
 (comment ;; some quick functions for testing
   (def test-image (let [img (new-image 2 2)]
                     (fill! img col/black)
-                    (set-pixel img 0 0 col/white)
+                    (set-pixel img 0 0 col/clear)
                     (set-pixel img 1 1 col/green)
                     img))
   
