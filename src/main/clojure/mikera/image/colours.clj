@@ -175,7 +175,7 @@
   (^Color [colour]
     (cond
       (instance? Color colour) colour
-      (integer? colour) (Color. (unchecked-int argb) true)
+      (integer? colour) (Color. (unchecked-int colour) true)
       ;; TODO: vactors of colour values / components
       :else (error "Don't know how to convert to Java colour: " (class colour)))))
 

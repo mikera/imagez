@@ -190,6 +190,15 @@
       (.fillRect g (int x) (int y) (int w) (int h))
       image)))
 
+(defn fill!
+  "Fills the image with a specified ARGB value or Java Color. Mutates the image."
+  ([image colour]
+    (let [g (graphics image)
+          ^Color colour (col/to-java-color colour)]
+      (.setColor g colour)
+      (.fillRect g (int 0) (int 0) (int (width image)) (int (height image)))
+      image)))
+
 (defn filter-image
   "Applies a filter to a source image.
   Filter may be either a BufferedImageOp or an Imagez filter.
@@ -331,6 +340,7 @@
 
 (comment ;; some quick functions for testing
   (def test-image (let [img (new-image 2 2)]
+                    (fill! img col/black)
                     (set-pixel img 0 0 col/white)
                     (set-pixel img 1 1 col/green)
                     img))
