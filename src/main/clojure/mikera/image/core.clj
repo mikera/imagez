@@ -303,15 +303,15 @@
                                                               progressive nil}}]
   (let [^javax.imageio.ImageWriter writer (.next (ImageIO/getImageWritersByFormatName format-name))
         ^javax.imageio.ImageWriteParam write-param (.getDefaultWriteParam writer)
-        iioimage (IIOImage. image nil nil)
-        outstream (ImageIO/createImageOutputStream (output-stream out))]
-    (apply-compression write-param quality format-name)
-    (apply-progressive write-param progressive)
-    (doto writer
-      (.setOutput outstream)
-      (.write nil iioimage write-param)
-      (.dispose))
-    (.close outstream)))
+        iioimage (IIOImage. image nil nil)]
+    (with-open [io-stream (output-stream out)
+                outstream (ImageIO/createImageOutputStream io-stream)]
+      (apply-compression write-param quality format-name)
+      (apply-progressive write-param progressive)
+      (doto writer
+        (.setOutput outstream)
+        (.write nil iioimage write-param)
+        (.dispose)))))
 
 (defn save
   "Stores an image to disk.
