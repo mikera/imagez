@@ -19,14 +19,23 @@
 
 (defn new-image
   "Creates a new BufferedImage with the specified width and height.
-   Uses BufferedImage/TYPE_INT_ARGB format by default,
-   but also supports BufferedImage/TYPE_INT_RGB when alpha channel is not needed."
+   
+   Uses BufferedImage/TYPE_INT_ARGB format by default.
+
+   Option type-or-alpha may be provided, which supports the following values:
+    - Boolean: true gives BufferedImage/TYPE_INT_ARGB, false gives BufferedImage/TYPE_INT_RGB.
+    - Integer: Specifies the exact image type, e.g. BufferedImage/TYPE_USHORT_GRAY
+    - Any other value: Gives the default image type BufferedImage/TYPE_INT_ARGB
+
+   Note that imagez assumes arguments are of BufferedImage/TYPE_INT_ARGB. Operations on other image
+   types may not work correctly."
   (^java.awt.image.BufferedImage [width height]
     (new-image width height true))
-  (^java.awt.image.BufferedImage [width height alpha?]
-    (if alpha?
-      (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB)
-      (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_RGB))))
+  (^java.awt.image.BufferedImage [width height type-or-alpha?]
+    (cond 
+      (number? type-or-alpha?) (BufferedImage. (int width) (int height) (int type-or-alpha?))
+      (false? type-or-alpha?) (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_RGB)
+      :else (BufferedImage. (int width) (int height) BufferedImage/TYPE_INT_ARGB))))
 
 (defn copy 
   "Copies an image to a new BufferedImage.
