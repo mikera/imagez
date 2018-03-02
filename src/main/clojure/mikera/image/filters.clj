@@ -19,7 +19,7 @@
       (clojure.lang.AFn/applyToHelper this args)))
 
 (defn to-image-op 
-  "Converts an Imagez filer to a java.awt.image.BufferedImageOp"
+  "Converts an Imagez filter to a java.awt.image.BufferedImageOp"
   (^BufferedImageOp [filter]
     (if (instance? BufferedImageOp filter)
       filter
