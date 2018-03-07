@@ -32,10 +32,23 @@
      DOUBLE-CACHE 
   (into-array Double (map (fn [x] (/ x 255.0)) (range 256))))
 
+;; A cache of boxed Long values
+;; This is needed to avoid new allocations of boxed longs 
+(def ^{:static true
+       :tag "[Ljava.lang.Long;"} 
+     LONG-CACHE 
+  (into-array Long (map (fn [x] (long x)) (range 256))))
+
+
 (defmacro boxed-double-value
   "Convenient macro to convert a long component value to a boxed java.lang.Double. Uses a cache of Double values."
   ([x]
     `(aget DOUBLE-CACHE (long ~x))))
+
+(defmacro boxed-long-value
+  "Convenient macro to convert a long component value to a boxed java.lang.Long. Uses a cache of Long values."
+  ([x]
+    `(aget LONG-CACHE (long ~x))))
 
 (defn rgb
   "Get the long ARGB colour value specified by the RGB colour values (expresed in range 0.0-1.0).
