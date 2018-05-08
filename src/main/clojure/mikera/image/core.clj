@@ -66,16 +66,33 @@
         nil)
       dst)))
 
+;; Used to define different scalling hints
+;; https://github.com/rkalla/imgscalr/blob/921c26ca273e2d04f36d09e7300e7f21aa165b4b/src/main/java/org/imgscalr/Scalr.java#L356
+(def scale-methods
+  {:automatic     org.imgscalr.Scalr$Method/AUTOMATIC
+   :speed         org.imgscalr.Scalr$Method/SPEED
+   :balanced      org.imgscalr.Scalr$Method/BALANCED
+   :quality       org.imgscalr.Scalr$Method/QUALITY
+   :ultra-quality org.imgscalr.Scalr$Method/ULTRA_QUALITY})
+
+;; Used to define different modes of resizing
+;; https://github.com/rkalla/imgscalr/blob/921c26ca273e2d04f36d09e7300e7f21aa165b4b/src/main/java/org/imgscalr/Scalr.java#L418
+(def scale-modes
+  {:automatic     org.imgscalr.Scalr$Mode/AUTOMATIC
+   :fit-exact     org.imgscalr.Scalr$Mode/FIT_EXACT
+   :fit-to-width  org.imgscalr.Scalr$Mode/FIT_TO_WIDTH
+   :fit-to-height org.imgscalr.Scalr$Mode/FIT_TO_HEIGHT})
+
 (defn resize
   "Resizes an image to the specified width and height. If height is omitted,
    maintains the aspect ratio."
-  (^java.awt.image.BufferedImage [^BufferedImage image new-width new-height]
+  (^java.awt.image.BufferedImage [^BufferedImage image new-width new-height {:keys [method mode]}]
     (Scalr/resize image
-                  org.imgscalr.Scalr$Method/BALANCED
-                  org.imgscalr.Scalr$Mode/FIT_EXACT
+                  (get scale-methods method org.imgscalr.Scalr$Method/BALANCED)
+                  (get scale-modes mode org.imgscalr.Scalr$Mode/FIT_EXACT)
                   (int new-width) (int new-height) nil))
-  (^java.awt.image.BufferedImage [^BufferedImage image new-width]
-    (resize image new-width (/ (* (long new-width) (.getHeight image)) (.getWidth image)))))
+  (^java.awt.image.BufferedImage [^BufferedImage image new-width options]
+    (resize image new-width (/ (* (long new-width) (.getHeight image)) (.getWidth image)) options)))
 
 (defn scale-image
   "DEPRECATED: use 'resize' instead"
@@ -87,10 +104,10 @@
 
 (defn scale
   "Scales an image by a given factor or ratio."
-  (^java.awt.image.BufferedImage [^BufferedImage image factor]
-    (resize image (* (.getWidth image) (double factor)) (* (.getHeight image) (double factor))))
-  (^java.awt.image.BufferedImage [^BufferedImage image width-factor height-factor]
-    (resize image (* (.getWidth image) (double width-factor)) (* (.getHeight image) (double height-factor)))))
+  (^java.awt.image.BufferedImage [^BufferedImage image factor options]
+    (resize image (* (.getWidth image) (double factor)) (* (.getHeight image) (double factor)) options))
+  (^java.awt.image.BufferedImage [^BufferedImage image width-factor height-factor options]
+    (resize image (* (.getWidth image) (double width-factor)) (* (.getHeight image) (double height-factor)) options)))
 
 (defn ensure-default-image-type
   "If the provided image is does not have the default image type
@@ -122,8 +139,10 @@
 
 (defn zoom
   "Zooms into (scales) an image with a given scale factor."
+  (^java.awt.image.BufferedImage [^BufferedImage image factor options]
+    (scale image factor options))
   (^java.awt.image.BufferedImage [^BufferedImage image factor]
-    (scale image factor)))
+    (scale image factor {})))
 
 (defn flip
   "Flips an image in the specified direction :horizontal or :vertical"

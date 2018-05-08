@@ -30,8 +30,8 @@
   (let [img (copy TEST-IMAGE 2.0)]
     (is (= 4 (width img)))
     (is (= 4 (height img)))
-    (is (= col/green) (get-pixel img 2 2))
-    (is (= col/clear) (get-pixel img 1 1))))
+    (is (= col/green (get-pixel img 2 2)))
+    (is (= col/clear (get-pixel img 1 1)))))
 
 (deftest test-scale-image
   (let [^BufferedImage bi (new-image 10 10)
@@ -57,7 +57,7 @@
 
 (deftest test-scale
   (let [^BufferedImage bi (new-image 10 10)
-        bi (scale bi 2.0 3.0)]
+        bi (scale bi 2.0 3.0 {})]
     (is (instance? BufferedImage bi))
     (is (== 20 (.getWidth bi)))
     (is (== 30 (.getHeight bi)))))
