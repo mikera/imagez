@@ -4,6 +4,7 @@
   (:use mikera.image.filters)
   (:use mikera.image.spectrum)
   (:use mikera.image.dither)
+  (:use mikera.image.gui)
   (:require [clojure.java.io :refer [resource]]))
 
 ;; load an image from a packaged resouce on the classpath
