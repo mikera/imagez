@@ -9,8 +9,7 @@
   (:import [java.awt Graphics2D Image Color])
   (:import [java.awt.image BufferedImage BufferedImageOp])
   (:import [javax.imageio ImageIO IIOImage ImageWriter ImageWriteParam])
-  (:import [org.imgscalr Scalr])
-  (:import [mikera.gui Frames]))
+  (:import [org.imgscalr Scalr]))
 
 (set! *unchecked-math* :warn-on-boxed)
 (set! *warn-on-reflection* true)
@@ -235,22 +234,6 @@
       im))
   (^java.awt.image.BufferedImage [spectrum-fn]
     (gradient-image spectrum-fn 200 60)))
-
-(defn show
-  "Displays an image in a new frame.
-
-   The frame includes simple menus for saving an image, and other handy utilities.
-
-   Options can be supplied in keyword arguments as follows:
-     :zoom   - zoom the image by a specified factor, e.g. 2.0. Performs smoothing
-     :resize - resizes the image by either a specified factor or to a given target shape e.g. [256 256]
-     :title  - specifies the title of the resulting frame
-   "
-  ([image & {:keys [zoom resize title]}]
-    (let [^BufferedImage image (if zoom (mikera.image.core/zoom image (double zoom)) image)
-          ^BufferedImage image (if resize (mikera.image.core/copy image resize) image)
-          title (or title "Imagez Frame")]
-      (Frames/display image (str title)))))
 
 (defn- ^javax.imageio.ImageWriteParam apply-compression
   "Applies compression to the write parameter, if possible."

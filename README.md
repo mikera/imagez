@@ -19,7 +19,8 @@ Contains various utility functions for handling colours and bitmap images.
 (def ant (load-image-resource "mikera/image/samples/Ant.png"))
 
 ;; show the iamge, after applying an "invert" filter
-(show (filter-image ant (filt/invert)))
+(require '[mikera.image.gui :as gui])
+(gui/show (filter-image ant (filt/invert)))
 ```
 
 ![Inverted ant](http://clojurefun.files.wordpress.com/2013/05/inverted-ant.png)
@@ -50,6 +51,7 @@ Imagez requires Clojure 1.4 and above.
 ```clojure
 (use 'mikera.image.core)
 (use 'mikera.image.colours)
+(use 'mikera.image.gui)
 
 ;; create a new image
 (def bi (new-image 32 32))
