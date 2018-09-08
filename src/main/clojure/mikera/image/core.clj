@@ -172,6 +172,36 @@
   [^BufferedImage image ^long x ^long y ^long rgb]
   (.setRGB image (int x) (int y) (unchecked-int rgb)))
 
+(defn merge-vert
+  "Merge images vertically together to one. Second image is merged
+under first image, third image is merged under second image, etc.
+All images must have the same width else return nil.
+Return merged image."
+  ([image1 image2]
+   (merge-vert (list image1 image2)))
+  ([images]
+   (let [merged-image (new-image (width (first images))
+                                 (reduce + (map height images)))]
+     (set-pixels merged-image (int-array (apply concat (map get-pixels images))))
+     merged-image)))
+
+(defn merge-horiz
+  "Merge images horizontal together to one. Second image is merged on
+  the right side of first image, third image is merged on right side
+  of second image, etc.  All images must have the same height else
+  return nil.
+  Return merged image."
+  ([image1 image2]
+   (merge-horiz (list image1 image2)))
+  ([images]
+   (let [merged-image (new-image (reduce + (map width images))
+                                 (height (first images)))]
+     (set-pixels merged-image (int-array (flatten
+                          (apply map concat
+                                 (map (fn [image] (partition (height (first images)) (get-pixels image)))
+                                      images)))))
+     merged-image)))
+
 (defn width 
   "Gets the width of an image as a long value"
   (^long [^BufferedImage image]
