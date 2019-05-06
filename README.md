@@ -18,7 +18,7 @@ Contains various utility functions for handling colours and bitmap images.
 ;; load an image from a resource file
 (def ant (load-image-resource "mikera/image/samples/Ant.png"))
 
-;; show the iamge, after applying an "invert" filter
+;; show the image, after applying an "invert" filter
 (show (filter-image ant (filt/invert)))
 ```
 
