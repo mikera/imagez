@@ -1,0 +1,9 @@
+{:paths ["src/main/clojure"]
+ :deps {org.clojure/clojure {:mvn/version "1.9.0"}
+        net.mikera/cljunit {:mvn/version "0.6.0"}
+        net.mikera/clojure-utils {:mvn/version "0.8.0"}
+        org.imgscalr/imgscalr-lib {:mvn/version "4.2"}
+        net.mikera/mathz {:mvn/version "0.3.0"}
+        net.mikera/mikera-gui {:mvn/version "0.3.1"}
+        net.mikera/randomz {:mvn/version "0.3.0"}
+        com.jhlabs/filters {:mvn/version "2.0.235-1"}}}
