@@ -260,6 +260,11 @@
           (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)
           (.setCompressionType "LZW"))
 
+        (= ext "bmp")
+        (doto write-param
+          (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)
+          (.setCompressionType "BI_BITFIELDS"))
+
         (.canWriteCompressed write-param)
         (doto write-param
           (.setCompressionMode ImageWriteParam/MODE_EXPLICIT)

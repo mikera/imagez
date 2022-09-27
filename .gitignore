@@ -8,3 +8,6 @@
 .nrepl-port
 /bin/
 /.externalToolBuilders/
+/.clj-kondo/.cache
+/.lsp/.cache
+/.portal
